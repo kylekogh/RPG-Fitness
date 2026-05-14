@@ -1,0 +1,1426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="RPG Fit">
+<title>RPG Fit — Chronicle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Crimson+Pro:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<style>
+  /* ─── THEMES ─── */
+  /* Ashen — dark urban dystopia (default) */
+  .theme-ashen {
+    --arc-gold: #BA7517; --arc-gold-light: #FAC775; --arc-gold-pale: #2a1f08;
+    --arc-deep: #042C53; --arc-mid: #4A8FC4;
+    --arc-teal: #1D9E75; --arc-teal-soft: #0a1f18;
+    --arc-coral: #D85A30;
+    --arc-purple: #7A6FD4; --arc-purple-soft: #1a1730;
+    --arc-hearth: #C4622E; --arc-hearth-soft: #2a0f08; --arc-hearth-light: #6b2a13;
+    --arc-vigil: #5A9A8A; --arc-vigil-soft: #0d1f1c; --arc-vigil-light: #2a5a52;
+    --arc-moon: #8B6FD4; --arc-moon-soft: #1a1430;
+    --bg: #0e0e0d; --surface: #1a1a18; --surface2: #242422;
+    --border: rgba(255,255,255,0.07); --border-mid: rgba(255,255,255,0.14);
+    --text: #e8e7e0; --text-secondary: #8a8a84; --text-tertiary: #4a4a46;
+  }
+  /* Ember — warm dark, fire in ruins */
+  .theme-ember {
+    --arc-gold: #D4882A; --arc-gold-light: #F0A94A; --arc-gold-pale: #2e1a06;
+    --arc-deep: #1A0A02; --arc-mid: #C4622E;
+    --arc-teal: #8A7A3A; --arc-teal-soft: #1e1a08;
+    --arc-coral: #E05A20;
+    --arc-purple: #8A4A2A; --arc-purple-soft: #200e06;
+    --arc-hearth: #D44A18; --arc-hearth-soft: #280800; --arc-hearth-light: #6b2008;
+    --arc-vigil: #8A6A3A; --arc-vigil-soft: #1a1408; --arc-vigil-light: #4a3a18;
+    --arc-moon: #C4722A; --arc-moon-soft: #1e0e04;
+    --bg: #120a04; --surface: #1e1008; --surface2: #2a1810;
+    --border: rgba(255,180,80,0.08); --border-mid: rgba(255,180,80,0.16);
+    --text: #f0e0c8; --text-secondary: #9a7a5a; --text-tertiary: #4a3a2a;
+  }
+  /* Woodland — forest witch cottage */
+  .theme-woodland {
+    --arc-gold: #7A6A2A; --arc-gold-light: #B8A84A; --arc-gold-pale: #f4f0e4;
+    --arc-deep: #1A2A1A; --arc-mid: #4A7A4A;
+    --arc-teal: #3A7A5A; --arc-teal-soft: #e8f4ee;
+    --arc-coral: #8A4A3A;
+    --arc-purple: #5A4A7A; --arc-purple-soft: #ede8f4;
+    --arc-hearth: #7A4A2A; --arc-hearth-soft: #f4ede8; --arc-hearth-light: #c4a48a;
+    --arc-vigil: #3A6A4A; --arc-vigil-soft: #e8f0ec; --arc-vigil-light: #8ab49a;
+    --arc-moon: #5A4A7A; --arc-moon-soft: #ede8f4;
+    --bg: #f8f5ee; --surface: #fdfcf8; --surface2: #f0ece2;
+    --border: rgba(80,60,20,0.1); --border-mid: rgba(80,60,20,0.2);
+    --text: #2a2018; --text-secondary: #6a5a40; --text-tertiary: #a09070;
+  }
+  /* Dusk — soft twilight lavender */
+  .theme-dusk {
+    --arc-gold: #8A6A9A; --arc-gold-light: #C4A4D4; --arc-gold-pale: #f4eef8;
+    --arc-deep: #1A1028; --arc-mid: #7A5A9A;
+    --arc-teal: #5A7A9A; --arc-teal-soft: #eaf0f8;
+    --arc-coral: #C47A8A;
+    --arc-purple: #7A5A9A; --arc-purple-soft: #f0eaf8;
+    --arc-hearth: #9A6A7A; --arc-hearth-soft: #f8eef2; --arc-hearth-light: #d4a4b4;
+    --arc-vigil: #5A7A8A; --arc-vigil-soft: #eaf4f8; --arc-vigil-light: #9ac4d4;
+    --arc-moon: #7A5A9A; --arc-moon-soft: #f0eaf8;
+    --bg: #faf8fd; --surface: #ffffff; --surface2: #f4f0f8;
+    --border: rgba(100,80,140,0.1); --border-mid: rgba(100,80,140,0.2);
+    --text: #1e1828; --text-secondary: #6a5a7a; --text-tertiary: #a090b0;
+  }
+
+  :root {
+    --arc-gold: #BA7517; --arc-gold-light: #FAC775; --arc-gold-pale: #FAEEDA;
+    --arc-deep: #042C53; --arc-mid: #185FA5;
+    --arc-teal: #1D9E75; --arc-teal-soft: #E1F5EE;
+    --arc-coral: #D85A30;
+    --arc-purple: #534AB7; --arc-purple-soft: #EEEDFE;
+    --arc-hearth: #993C1D; --arc-hearth-soft: #FAECE7; --arc-hearth-light: #F5C4B3;
+    --arc-vigil: #4A7A6D; --arc-vigil-soft: #E4F2EF; --arc-vigil-light: #A8D4CB;
+    --arc-moon: #6B4FA8; --arc-moon-soft: #F0EBFF;
+    --bg: #fafaf8; --surface: #ffffff; --surface2: #f4f3ef;
+    --border: rgba(0,0,0,0.1); --border-mid: rgba(0,0,0,0.18);
+    --text: #1a1a18; --text-secondary: #6b6b67; --text-tertiary: #a0a09c;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  html, body { height: 100%; overflow: hidden; overflow-x: hidden; background: var(--bg); color: var(--text); font-family: 'Crimson Pro', Georgia, serif; }
+  .app { display: flex; flex-direction: column; height: 100vh; height: 100dvh; max-width: 480px; margin: 0 auto; background: var(--bg); overflow-x: hidden; }
+
+  /* CHARACTER CREATION */
+  .creation-screen { display: flex; flex-direction: column; height: 100vh; height: 100dvh; max-width: 480px; margin: 0 auto; overflow-y: auto; padding: 2rem 1.5rem 3rem; background: var(--bg); }
+  .creation-screen.hidden { display: none; }
+  .creation-title { font-family: 'Cinzel', serif; font-size: 22px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+  .creation-subtitle { font-size: 14px; color: var(--text-secondary); font-style: italic; margin-bottom: 2rem; line-height: 1.5; }
+  .creation-section { margin-bottom: 1.5rem; }
+  .creation-label { font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 0.09em; color: var(--text-secondary); margin-bottom: 0.6rem; display: block; }
+  .creation-input { width: 100%; padding: 10px 12px; font-size: 16px; font-family: 'Crimson Pro', serif; border: 0.5px solid var(--border-mid); border-radius: 10px; background: var(--surface); color: var(--text); -webkit-appearance: none; }
+  .creation-input:focus { outline: none; border-color: var(--arc-gold); }
+  .class-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .class-option { background: var(--surface); border: 1.5px solid var(--border); border-radius: 10px; padding: 10px; cursor: pointer; transition: all 0.15s; }
+  .class-option.selected { border-color: var(--arc-gold); background: var(--arc-gold-pale); }
+  .class-option:active { opacity: 0.7; }
+  .class-option-icon { font-size: 20px; margin-bottom: 4px; }
+  .class-option-name { font-family: 'Cinzel', serif; font-size: 10px; font-weight: 600; color: var(--text); margin-bottom: 2px; }
+  .class-option-desc { font-size: 10px; color: var(--text-secondary); font-style: italic; line-height: 1.4; }
+  .vigil-grid { display: flex; flex-direction: column; gap: 6px; }
+  .vigil-option { background: var(--surface); border: 1.5px solid var(--border); border-radius: 10px; padding: 10px 12px; cursor: pointer; display: flex; align-items: center; gap: 10px; transition: all 0.15s; }
+  .vigil-option.selected { border-color: var(--arc-vigil); background: var(--arc-vigil-soft); }
+  .vigil-option-icon { font-size: 18px; flex-shrink: 0; }
+  .vigil-option-info { flex: 1; }
+  .vigil-option-name { font-family: 'Cinzel', serif; font-size: 11px; font-weight: 600; color: var(--text); }
+  .vigil-option-desc { font-size: 11px; color: var(--text-secondary); font-style: italic; }
+  .vigil-check-mark { font-size: 16px; color: var(--arc-vigil); opacity: 0; transition: opacity 0.2s; }
+  .vigil-option.selected .vigil-check-mark { opacity: 1; }
+  .begin-btn { width: 100%; padding: 1rem; font-family: 'Cinzel', serif; font-size: 13px; letter-spacing: 0.1em; background: var(--arc-gold-pale); color: var(--arc-gold); border: 1px solid var(--arc-gold-light); border-radius: 12px; cursor: pointer; margin-top: 1rem; }
+  .begin-btn:active { opacity: 0.7; }
+  .begin-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+  .creation-note { font-size: 11px; color: var(--text-tertiary); font-style: italic; text-align: center; margin-top: 0.5rem; }
+
+  /* HEADER */
+  .header { background: var(--surface); border-bottom: 0.5px solid var(--border); padding: 0.75rem 1.25rem 0.6rem; flex-shrink: 0; }
+  .world-bar-wrap { display: flex; align-items: center; gap: 8px; margin-bottom: 0.45rem; }
+  .world-bar-label { font-family: 'Cinzel', serif; font-size: 8px; color: var(--text-secondary); letter-spacing: 0.1em; white-space: nowrap; }
+  .world-bar-track { flex: 1; height: 4px; background: var(--surface2); border-radius: 2px; overflow: hidden; }
+  .world-bar-fill { height: 100%; background: var(--arc-teal); border-radius: 2px; transition: width 0.8s ease; }
+  .world-val { font-family: 'Cinzel', serif; font-size: 9px; color: var(--arc-teal); min-width: 32px; text-align: right; }
+  .char-row { display: flex; align-items: flex-start; gap: 10px; }
+  .char-sigil { width: 44px; height: 44px; border-radius: 50%; background: var(--arc-purple-soft); border: 1.5px solid var(--arc-purple); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 20px; }
+  .char-info { flex: 1; min-width: 0; }
+  .char-name { font-family: 'Cinzel', serif; font-size: 14px; font-weight: 600; color: var(--text); line-height: 1.1; }
+  .char-title { font-size: 10px; color: var(--arc-gold); font-style: italic; margin-bottom: 4px; }
+  .level-row { display: flex; align-items: center; gap: 5px; }
+  .level-badge { font-family: 'Cinzel', serif; font-size: 9px; font-weight: 600; background: var(--arc-gold-pale); color: var(--arc-gold); padding: 2px 7px; border-radius: 10px; border: 0.5px solid var(--arc-gold-light); white-space: nowrap; }
+  .xp-bar-track { flex: 1; height: 5px; background: var(--surface2); border-radius: 3px; overflow: hidden; }
+  .xp-bar-fill { height: 100%; background: var(--arc-gold); border-radius: 3px; transition: width 0.8s ease; }
+  .xp-label { font-size: 9px; color: var(--text-secondary); white-space: nowrap; }
+  .class-row { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; margin-top: 6px; }
+  .class-card { background: var(--surface2); border-radius: 7px; padding: 5px 7px; }
+  .class-label { font-family: 'Cinzel', serif; font-size: 7px; letter-spacing: 0.07em; color: var(--text-secondary); display: block; margin-bottom: 2px; }
+  .class-inner { display: flex; align-items: center; gap: 5px; }
+  .class-xp-track { flex: 1; height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
+  .class-xp-fill-arc { height: 100%; background: var(--arc-purple); border-radius: 2px; transition: width 0.6s ease; }
+  .class-xp-fill-hearth { height: 100%; background: var(--arc-hearth); border-radius: 2px; transition: width 0.6s ease; }
+  .class-level { font-family: 'Cinzel', serif; font-size: 9px; font-weight: 600; }
+  .class-level.arc { color: var(--arc-purple); }
+  .class-level.hearth { color: var(--arc-hearth); }
+  .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; margin-top: 6px; }
+  .stat-card { background: var(--surface2); border-radius: 7px; padding: 5px 4px; text-align: center; }
+  .stat-name { font-family: 'Cinzel', serif; font-size: 7px; letter-spacing: 0.06em; color: var(--text-secondary); display: block; margin-bottom: 1px; }
+  .stat-val { font-family: 'Cinzel', serif; font-size: 17px; font-weight: 600; line-height: 1; display: block; }
+  .stat-card.discipline .stat-val { color: var(--arc-purple); }
+  .stat-card.fortitude .stat-val { color: var(--arc-coral); }
+  .stat-card.resonance .stat-val { color: var(--arc-mid); }
+
+  .nav-tabs { display: flex; border-bottom: 0.5px solid var(--border); background: var(--surface); flex-shrink: 0; }
+  .nav-tab { flex: 1; padding: 0.5rem 0; text-align: center; font-family: 'Cinzel', serif; font-size: 8px; letter-spacing: 0.03em; color: var(--text-secondary); cursor: pointer; border: none; border-bottom: 2px solid transparent; background: none; transition: color 0.2s; }
+  .nav-tab.active { color: var(--arc-gold); border-bottom-color: var(--arc-gold); }
+  .views { flex: 1; overflow: hidden; position: relative; }
+  .view { display: none; height: 100%; overflow-y: auto; padding: 1rem 1.25rem 2rem; -webkit-overflow-scrolling: touch; }
+  .view.active { display: block; }
+
+  .level-up-banner { background: var(--arc-gold-pale); border: 1px solid var(--arc-gold-light); border-radius: 12px; padding: 0.7rem; text-align: center; margin-bottom: 0.75rem; display: none; }
+  .level-up-banner.show { display: block; }
+  .level-up-title { font-family: 'Cinzel', serif; font-size: 12px; color: var(--arc-gold); margin-bottom: 2px; }
+  .level-up-text { font-size: 12px; color: var(--text-secondary); font-style: italic; }
+
+  .session-header { margin-bottom: 0.75rem; }
+  .session-day { font-family: 'Cinzel', serif; font-size: 10px; color: var(--text-secondary); letter-spacing: 0.08em; margin-bottom: 2px; }
+  .session-title { font-size: 16px; color: var(--text); font-style: italic; }
+  .exercise-card { background: var(--surface); border: 0.5px solid var(--border); border-radius: 12px; padding: 0.7rem 0.85rem; margin-bottom: 0.6rem; }
+  .exercise-card.complete { border-color: var(--arc-teal); background: var(--arc-teal-soft); }
+  .ex-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+  .ex-name { font-family: 'Cinzel', serif; font-size: 11px; font-weight: 600; color: var(--text); }
+  .ex-muscle { font-size: 11px; color: var(--text-secondary); font-style: italic; margin-top: 2px; }
+  .ex-complete-badge { font-family: 'Cinzel', serif; font-size: 9px; background: var(--arc-teal); color: white; padding: 3px 8px; border-radius: 8px; white-space: nowrap; }
+  .sets-row { display: flex; gap: 6px; margin-bottom: 8px; flex-wrap: wrap; }
+  .set-chip { background: var(--surface2); border: 0.5px solid var(--border); border-radius: 6px; padding: 5px 9px; font-size: 11px; color: var(--text-secondary); }
+  .set-chip.logged { background: var(--arc-purple-soft); border-color: var(--arc-purple); color: var(--arc-purple); }
+  .log-row { display: flex; gap: 5px; align-items: center; overflow: hidden; }
+  .log-input { flex: 1; padding: 8px 6px; font-size: 14px; font-family: 'Crimson Pro', serif; border: 0.5px solid var(--border-mid); border-radius: 8px; background: var(--surface2); color: var(--text); -webkit-appearance: none; appearance: none; min-width: 0; }
+  .log-input::placeholder { color: var(--text-tertiary); }
+  .log-input:focus { outline: none; border-color: var(--arc-purple); }
+  .log-btn { padding: 8px 8px; font-family: 'Cinzel', serif; font-size: 9px; background: var(--arc-purple-soft); color: var(--arc-purple); border: 0.5px solid var(--arc-purple); border-radius: 8px; cursor: pointer; white-space: nowrap; letter-spacing: 0.02em; flex-shrink: 0; }
+  .log-btn:active { opacity: 0.6; }
+  .prev-best { font-size: 11px; color: var(--text-secondary); font-style: italic; margin-top: 5px; }
+  .swap-btn { padding: 4px 8px; font-family: 'Cinzel', serif; font-size: 8px; background: none; color: var(--text-tertiary); border: 0.5px solid var(--border); border-radius: 6px; cursor: pointer; letter-spacing: 0.04em; margin-left: auto; white-space: nowrap; }
+  .swap-btn:active { opacity: 0.6; }
+  .swap-btn.locked { opacity: 0.3; cursor: not-allowed; }
+  .complete-session-btn { width: 100%; padding: 0.8rem; font-family: 'Cinzel', serif; font-size: 12px; letter-spacing: 0.1em; background: var(--arc-gold-pale); color: var(--arc-gold); border: 1px solid var(--arc-gold-light); border-radius: 12px; cursor: pointer; margin-top: 0.5rem; }
+  .complete-session-btn:active { opacity: 0.7; }
+  .complete-session-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+  .hearth-header { margin-bottom: 0.85rem; }
+  .hearth-title { font-size: 16px; color: var(--text); font-style: italic; margin-bottom: 3px; }
+  .hearth-subtitle { font-family: 'Cinzel', serif; font-size: 10px; color: var(--text-secondary); letter-spacing: 0.07em; }
+  .hearth-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 0.85rem; }
+  .hearth-stat { background: var(--surface2); border-radius: 8px; padding: 7px; text-align: center; }
+  .hearth-stat-label { font-family: 'Cinzel', serif; font-size: 7px; color: var(--text-secondary); letter-spacing: 0.06em; display: block; margin-bottom: 2px; }
+  .hearth-stat-val { font-family: 'Cinzel', serif; font-size: 18px; font-weight: 600; color: var(--arc-hearth); display: block; }
+  .suggestion-card { background: var(--surface); border: 0.5px solid var(--border); border-radius: 12px; padding: 0.85rem; margin-bottom: 0.65rem; }
+  .suggestion-label { font-family: 'Cinzel', serif; font-size: 9px; color: var(--text-secondary); letter-spacing: 0.07em; margin-bottom: 5px; }
+  .suggestion-meal { font-size: 16px; color: var(--text); font-style: italic; margin-bottom: 4px; }
+  .suggestion-desc { font-size: 12px; color: var(--text-secondary); line-height: 1.5; }
+  .suggestion-btns { display: flex; gap: 8px; margin-top: 10px; }
+  .reroll-btn { flex: 1; padding: 8px; font-family: 'Cinzel', serif; font-size: 10px; background: none; color: var(--text-secondary); border: 0.5px solid var(--border-mid); border-radius: 8px; cursor: pointer; }
+  .reroll-btn:active { opacity: 0.6; }
+  .craft-btn { flex: 2; padding: 8px; font-family: 'Cinzel', serif; font-size: 10px; background: var(--arc-hearth-soft); color: var(--arc-hearth); border: 0.5px solid var(--arc-hearth-light); border-radius: 8px; cursor: pointer; letter-spacing: 0.04em; }
+  .craft-btn:active { opacity: 0.6; }
+  .takeaway-btn { width: 100%; padding: 0.7rem; font-family: 'Cinzel', serif; font-size: 10px; background: none; color: var(--text-tertiary); border: 0.5px solid var(--border); border-radius: 12px; cursor: pointer; margin-top: 0.25rem; letter-spacing: 0.05em; }
+  .takeaway-btn:active { opacity: 0.6; }
+
+  .vigil-header { margin-bottom: 0.85rem; }
+  .vigil-title { font-size: 16px; color: var(--text); font-style: italic; margin-bottom: 3px; }
+  .vigil-subtitle { font-family: 'Cinzel', serif; font-size: 10px; color: var(--text-secondary); letter-spacing: 0.07em; }
+  .vigil-note { font-size: 12px; color: var(--text-secondary); font-style: italic; margin-bottom: 1rem; line-height: 1.5; }
+  .vigil-card { background: var(--surface); border: 0.5px solid var(--border); border-radius: 12px; padding: 0.85rem 1rem; margin-bottom: 0.65rem; display: flex; align-items: center; gap: 12px; cursor: pointer; transition: all 0.15s; }
+  .vigil-card.done { border-color: var(--arc-vigil); background: var(--arc-vigil-soft); }
+  .vigil-card:active { opacity: 0.7; }
+  .vigil-icon { font-size: 22px; flex-shrink: 0; width: 36px; text-align: center; }
+  .vigil-info { flex: 1; }
+  .vigil-name { font-family: 'Cinzel', serif; font-size: 12px; font-weight: 600; color: var(--text); margin-bottom: 2px; }
+  .vigil-desc { font-size: 11px; color: var(--text-secondary); font-style: italic; }
+  .vigil-xp { font-family: 'Cinzel', serif; font-size: 10px; color: var(--arc-vigil); margin-top: 3px; }
+  .vigil-check { font-size: 18px; flex-shrink: 0; opacity: 0; transition: opacity 0.2s; }
+  .vigil-card.done .vigil-check { opacity: 1; }
+
+  .log-entry { border-bottom: 0.5px solid var(--border); padding: 0.8rem 0; }
+  .log-entry:last-child { border-bottom: none; }
+  .log-entry-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 4px; }
+  .log-date { font-family: 'Cinzel', serif; font-size: 10px; color: var(--text-secondary); letter-spacing: 0.05em; }
+  .log-type-badge { font-family: 'Cinzel', serif; font-size: 8px; padding: 2px 6px; border-radius: 6px; white-space: nowrap; }
+  .log-type-badge.ritual { background: var(--arc-purple-soft); color: var(--arc-purple); }
+  .log-type-badge.hearth { background: var(--arc-hearth-soft); color: var(--arc-hearth); }
+  .log-type-badge.vigil { background: var(--arc-vigil-soft); color: var(--arc-vigil); }
+  .log-type-badge.takeaway { background: var(--surface2); color: var(--text-tertiary); }
+  .log-session-name { font-size: 14px; color: var(--text); font-style: italic; margin: 2px 0; }
+  .log-flavour { font-size: 12px; color: var(--text-secondary); font-style: italic; line-height: 1.55; margin-top: 3px; }
+  .log-xp { font-family: 'Cinzel', serif; font-size: 10px; color: var(--arc-gold); margin-top: 3px; }
+
+  .section-label { font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 0.09em; color: var(--text-secondary); margin-bottom: 0.7rem; }
+  .empty-log { text-align: center; padding: 2.5rem 0; color: var(--text-secondary); font-style: italic; font-size: 14px; line-height: 1.7; }
+  .streak-row { display: flex; gap: 5px; margin-bottom: 0.4rem; }
+  .streak-day { flex: 1; height: 8px; border-radius: 4px; background: var(--surface2); }
+  .streak-day.gym { background: var(--arc-purple); }
+  .streak-day.hearth { background: var(--arc-hearth); }
+  .streak-day.vigil { background: var(--arc-vigil); }
+  .streak-day.full { background: var(--arc-gold); }
+  .streak-dates { display: flex; justify-content: space-between; margin-bottom: 1rem; }
+  .streak-date-label { font-size: 9px; color: var(--text-tertiary); font-family: 'Cinzel', serif; }
+  .chart-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+  .chart-ex-name { font-size: 11px; color: var(--text-secondary); width: 95px; flex-shrink: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .chart-bar-track { flex: 1; height: 8px; background: var(--surface2); border-radius: 4px; overflow: hidden; }
+  .chart-bar-fill { height: 100%; background: var(--arc-coral); border-radius: 4px; transition: width 0.8s ease; }
+  .chart-val { font-family: 'Cinzel', serif; font-size: 10px; color: var(--arc-coral); min-width: 40px; text-align: right; }
+  .divider { height: 0.5px; background: var(--border); margin: 1rem 0; }
+  .export-btn { width: 100%; padding: 0.75rem; font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 0.07em; background: none; color: var(--text-secondary); border: 0.5px solid var(--border-mid); border-radius: 12px; cursor: pointer; margin-top: 0.5rem; }
+  .export-btn:active { opacity: 0.6; }
+  .danger-btn { width: 100%; padding: 0.75rem; font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 0.07em; background: none; color: var(--arc-coral); border: 0.5px solid var(--arc-coral); border-radius: 12px; cursor: pointer; margin-top: 0.5rem; }
+  .danger-btn:active { opacity: 0.6; }
+
+  /* LANDING SCREEN */
+  .landing-screen { display: flex; flex-direction: column; justify-content: space-between; height: 100vh; height: 100dvh; max-width: 480px; margin: 0 auto; padding: 3rem 2rem 3rem; background: var(--bg); overflow-y: auto; }
+  .landing-screen.hidden { display: none; }
+  .landing-sigil { font-size: 48px; text-align: center; margin-bottom: 1.5rem; }
+  .landing-eyebrow { font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 0.15em; color: var(--text-tertiary); text-align: center; margin-bottom: 0.5rem; }
+  .landing-title { font-family: 'Cinzel', serif; font-size: 28px; font-weight: 600; color: var(--text); text-align: center; line-height: 1.2; margin-bottom: 0.5rem; }
+  .landing-subtitle { font-size: 13px; color: var(--arc-gold); font-style: italic; text-align: center; margin-bottom: 2.5rem; letter-spacing: 0.02em; }
+  .landing-lore { flex: 1; }
+  .landing-lore-block { margin-bottom: 1.25rem; }
+  .landing-lore-label { font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 0.1em; color: var(--text-tertiary); margin-bottom: 0.4rem; }
+  .landing-lore-text { font-size: 15px; color: var(--text-secondary); line-height: 1.7; font-style: italic; }
+  .landing-lore-text strong { color: var(--text); font-style: normal; font-weight: normal; }
+  .landing-divider { height: 0.5px; background: var(--border); margin: 1.5rem 0; }
+  .landing-call { font-family: 'Cinzel', serif; font-size: 13px; color: var(--text); text-align: center; line-height: 1.6; margin-bottom: 2rem; }
+  .landing-btn { width: 100%; padding: 1rem; font-family: 'Cinzel', serif; font-size: 13px; letter-spacing: 0.12em; background: var(--arc-gold-pale); color: var(--arc-gold); border: 1px solid var(--arc-gold-light); border-radius: 12px; cursor: pointer; }
+  .landing-btn:active { opacity: 0.7; }
+  .landing-world-bar { display: flex; align-items: center; gap: 10px; margin-bottom: 2.5rem; }
+  .landing-world-track { flex: 1; height: 3px; background: var(--surface2); border-radius: 2px; overflow: hidden; }
+  .landing-world-fill { height: 100%; border-radius: 2px; background: linear-gradient(90deg, var(--arc-coral) 0%, var(--arc-gold) 50%, var(--arc-teal) 100%); width: 52%; }
+  .landing-world-label { font-family: 'Cinzel', serif; font-size: 8px; color: var(--text-tertiary); white-space: nowrap; letter-spacing: 0.08em; }
+
+  /* STREAK */
+  .streak-card { background: var(--surface); border: 0.5px solid var(--border); border-radius: 12px; padding: 1rem; margin-bottom: 1rem; }
+  .streak-numbers { display: flex; gap: 8px; margin-bottom: 0.85rem; }
+  .streak-num-block { flex: 1; background: var(--surface2); border-radius: 8px; padding: 8px; text-align: center; }
+  .streak-num-label { font-family: 'Cinzel', serif; font-size: 7px; letter-spacing: 0.07em; color: var(--text-secondary); display: block; margin-bottom: 2px; }
+  .streak-num-val { font-family: 'Cinzel', serif; font-size: 22px; font-weight: 600; color: var(--arc-gold); display: block; line-height: 1; }
+  .streak-num-val.best { color: var(--arc-teal); }
+  .streak-message { font-size: 13px; color: var(--text-secondary); font-style: italic; line-height: 1.6; text-align: center; padding: 0 0.25rem; }
+  .streak-message.active { color: var(--text); }
+
+  /* THEME PICKER */
+  .theme-picker { display: flex; gap: 8px; margin-bottom: 1.5rem; justify-content: center; }
+  .theme-swatch { flex: 1; padding: 8px 4px; border-radius: 10px; border: 1.5px solid transparent; cursor: pointer; text-align: center; transition: all 0.15s; }
+  .theme-swatch:active { opacity: 0.7; }
+  .theme-swatch.selected { border-color: var(--arc-gold); }
+  .theme-swatch-dot { width: 24px; height: 24px; border-radius: 50%; margin: 0 auto 4px; }
+  .theme-swatch-name { font-family: 'Cinzel', serif; font-size: 8px; letter-spacing: 0.05em; color: var(--text-secondary); }
+  .swatch-ashen .theme-swatch-dot { background: linear-gradient(135deg, #0e0e0d 50%, #7A6FD4 50%); }
+  .swatch-ember .theme-swatch-dot { background: linear-gradient(135deg, #120a04 50%, #D4882A 50%); }
+  .swatch-woodland .theme-swatch-dot { background: linear-gradient(135deg, #f8f5ee 50%, #3A7A5A 50%); }
+  .swatch-dusk .theme-swatch-dot { background: linear-gradient(135deg, #faf8fd 50%, #7A5A9A 50%); }
+
+  .toast { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%); background: var(--arc-deep); color: white; font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 0.05em; padding: 10px 20px; border-radius: 20px; opacity: 0; transition: opacity 0.3s; pointer-events: none; white-space: nowrap; z-index: 999; }
+  .toast.show { opacity: 1; }
+</style>
+</head>
+<body>
+
+<!-- LANDING SCREEN -->
+<div class="landing-screen" id="landingScreen">
+  <div>
+    <div class="landing-eyebrow">THE CHRONICLE AWAITS</div>
+    <div class="landing-title">The World Is Changing</div>
+    <div class="landing-subtitle">And what you do next matters more than you know.</div>
+
+    <div class="landing-world-bar">
+      <span class="landing-world-label">WORLD BALANCE</span>
+      <div class="landing-world-track"><div class="landing-world-fill"></div></div>
+      <span class="landing-world-label">UNCERTAIN</span>
+    </div>
+  </div>
+
+  <div class="landing-lore">
+    <div class="landing-lore-block">
+      <div class="landing-lore-label">THE STATE OF THINGS</div>
+      <div class="landing-lore-text">The city breathes, but only just. The old structures are cracking — <strong>institutions hollow, trust eroded, the comfortable certainties gone</strong>. It is not yet ruin. But ruin is close enough to smell.</div>
+    </div>
+
+    <div class="landing-lore-block">
+      <div class="landing-lore-label">THE BALANCE</div>
+      <div class="landing-lore-text">The world does not tip on grand gestures. It tips on the <strong>small accumulation of choices</strong> made by people who could not see they were making them. A few more bad decisions and the fractures become breaks. A few more good ones and the city holds — not forever, but for another day.</div>
+    </div>
+
+    <div class="landing-lore-block">
+      <div class="landing-lore-label">THE HOPE</div>
+      <div class="landing-lore-text">There are those who understand this. Who train not for glory but because <strong>a stronger self is a more capable one</strong>. Who cook rather than surrender to convenience. Who reach out, rest properly, keep learning. Who tend the small fires. These people are the reason the city is still standing.</div>
+    </div>
+
+    <div class="landing-divider"></div>
+
+    <div class="landing-call">You are one of them.<br>Or you are about to become one.</div>
+  </div>
+
+  <div>
+    <div class="landing-lore-label" style="text-align:center;margin-bottom:0.6rem">CHOOSE YOUR WORLD</div>
+    <div class="theme-picker">
+      <div class="theme-swatch swatch-ashen selected" id="swatch-ashen" onclick="selectTheme('ashen')">
+        <div class="theme-swatch-dot"></div>
+        <div class="theme-swatch-name">ASHEN</div>
+      </div>
+      <div class="theme-swatch swatch-ember" id="swatch-ember" onclick="selectTheme('ember')">
+        <div class="theme-swatch-dot"></div>
+        <div class="theme-swatch-name">EMBER</div>
+      </div>
+      <div class="theme-swatch swatch-woodland" id="swatch-woodland" onclick="selectTheme('woodland')">
+        <div class="theme-swatch-dot"></div>
+        <div class="theme-swatch-name">WOODLAND</div>
+      </div>
+      <div class="theme-swatch swatch-dusk" id="swatch-dusk" onclick="selectTheme('dusk')">
+        <div class="theme-swatch-dot"></div>
+        <div class="theme-swatch-name">DUSK</div>
+      </div>
+    </div>
+    <button class="landing-btn" onclick="enterChronicle()">ENTER THE CHRONICLE</button>
+  </div>
+</div>
+
+<!-- CHARACTER CREATION -->
+<div class="creation-screen" id="creationScreen">
+  <div class="creation-title">Begin Your Chronicle</div>
+  <div class="creation-subtitle">Shape your character. The world is on the brink — small acts of discipline hold it together.</div>
+
+  <div class="creation-section">
+    <span class="creation-label">YOUR NAME</span>
+    <input class="creation-input" id="charNameInput" type="text" placeholder="Enter your name..." maxlength="24" />
+  </div>
+
+  <div class="creation-section">
+    <span class="creation-label">PRIMARY CLASS</span>
+    <div class="class-grid" id="primaryClassGrid"></div>
+  </div>
+
+  <div class="creation-section">
+    <span class="creation-label">HEARTH CLASS</span>
+    <div class="class-grid" id="hearthClassGrid"></div>
+  </div>
+
+  <div class="creation-section">
+    <span class="creation-label">EXERCISE GOAL</span>
+    <div class="vigil-grid" id="goalOptionGrid"></div>
+  </div>
+
+  <div class="creation-section">
+    <span class="creation-label">VIGIL PRACTICES — CHOOSE YOUR OWN</span>
+    <div class="vigil-grid" id="vigilOptionGrid"></div>
+  </div>
+
+  <button class="begin-btn" id="beginBtn" onclick="beginChronicle()" disabled>BEGIN THE CHRONICLE</button>
+  <div class="creation-note">You can import an existing chronicle after creation.</div>
+</div>
+
+<!-- MAIN APP -->
+<div class="app hidden" id="mainApp">
+  <div class="header">
+    <div class="world-bar-wrap">
+      <span class="world-bar-label">WORLD HEALTH</span>
+      <div class="world-bar-track"><div class="world-bar-fill" id="worldBarFill" style="width:10%"></div></div>
+      <span class="world-val" id="worldVal">10</span>
+    </div>
+    <div class="char-row">
+      <div class="char-sigil" id="charSigil">✦</div>
+      <div class="char-info">
+        <div class="char-name" id="charNameDisplay">—</div>
+        <div class="char-title" id="charTitle">—</div>
+        <div class="level-row">
+          <span class="level-badge" id="levelBadge">LVL 1</span>
+          <div class="xp-bar-track"><div class="xp-bar-fill" id="xpBarFill" style="width:0%"></div></div>
+          <span class="xp-label" id="xpLabel">0 / 100 XP</span>
+        </div>
+      </div>
+    </div>
+    <div class="class-row">
+      <div class="class-card">
+        <span class="class-label" id="primaryClassLabel">PRIMARY</span>
+        <div class="class-inner">
+          <span class="class-level arc" id="arcLevel">LVL 1</span>
+          <div class="class-xp-track"><div class="class-xp-fill-arc" id="arcXpFill" style="width:0%"></div></div>
+        </div>
+      </div>
+      <div class="class-card">
+        <span class="class-label" id="hearthClassLabel">HEARTH</span>
+        <div class="class-inner">
+          <span class="class-level hearth" id="hearthLevel">LVL 1</span>
+          <div class="class-xp-track"><div class="class-xp-fill-hearth" id="hearthXpFill" style="width:0%"></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="stats-row">
+      <div class="stat-card discipline"><span class="stat-name">DISCIPLINE</span><span class="stat-val" id="statDiscipline">0</span></div>
+      <div class="stat-card fortitude"><span class="stat-name">FORTITUDE</span><span class="stat-val" id="statFortitude">0</span></div>
+      <div class="stat-card resonance"><span class="stat-name">RESONANCE</span><span class="stat-val" id="statResonance">0</span></div>
+    </div>
+  </div>
+
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="switchTab('session')">RITUAL</button>
+    <button class="nav-tab" onclick="switchTab('hearth')">HEARTH</button>
+    <button class="nav-tab" onclick="switchTab('vigil')">VIGIL</button>
+    <button class="nav-tab" onclick="switchTab('log')">GRIMOIRE</button>
+    <button class="nav-tab" onclick="switchTab('progress')">CHRONICLE</button>
+    <button class="nav-tab" onclick="switchTab('data')">CODEX</button>
+  </div>
+
+  <div class="views">
+    <div class="view active" id="view-session">
+      <div class="level-up-banner" id="levelUpBanner">
+        <div class="level-up-title" id="levelUpTitle">The ley lines shift.</div>
+        <div class="level-up-text" id="levelUpText">Power grows.</div>
+      </div>
+      <div class="session-header">
+        <div class="session-day">TODAY'S RITUAL</div>
+        <div class="session-title" id="sessionTitle">Loading...</div>
+      </div>
+      <div id="exerciseList"></div>
+      <button class="complete-session-btn" id="completeBtn" onclick="completeSession()" disabled>SEAL THE RITUAL</button>
+    </div>
+
+    <div class="view" id="view-hearth">
+      <div class="hearth-header">
+        <div class="hearth-title" id="hearthViewTitle">The Hearthbinder's Kitchen</div>
+        <div class="hearth-subtitle">CRAFT A MEAL — FEED THE WORLD</div>
+      </div>
+      <div class="hearth-stats">
+        <div class="hearth-stat"><span class="hearth-stat-label">MEALS CRAFTED</span><span class="hearth-stat-val" id="mealsCrafted">0</span></div>
+        <div class="hearth-stat"><span class="hearth-stat-label">SUSTENANCE</span><span class="hearth-stat-val" id="statSustenance">0</span></div>
+      </div>
+      <div class="suggestion-card">
+        <div class="suggestion-label">TONIGHT'S SUGGESTION</div>
+        <div class="suggestion-meal" id="suggestionMeal">Loading...</div>
+        <div class="suggestion-desc" id="suggestionDesc">...</div>
+        <div class="suggestion-btns">
+          <button class="reroll-btn" onclick="rerollMeal()">REROLL</button>
+          <button class="craft-btn" onclick="craftMeal()">MEAL CRAFTED</button>
+        </div>
+      </div>
+      <div class="suggestion-card" style="margin-top:0">
+        <div class="suggestion-label">MADE SOMETHING ELSE?</div>
+        <input class="log-input" id="customMealInput" type="text" placeholder="What did you make..." style="width:100%;margin-bottom:8px" />
+        <button class="craft-btn" style="width:100%" onclick="craftCustomMeal()">LOG CUSTOM MEAL</button>
+      </div>
+      <button class="takeaway-btn" onclick="logTakeaway()">TAKEAWAY NIGHT — NO XP</button>
+    </div>
+
+    <div class="view" id="view-vigil">
+      <div class="vigil-header">
+        <div class="vigil-title">The Vigil</div>
+        <div class="vigil-subtitle">THE QUIET WORK BETWEEN RITUALS</div>
+      </div>
+      <p class="vigil-note">No obligations. No failure states. Just the small acts that keep you — and the world — intact.</p>
+      <div id="vigilCards"></div>
+    </div>
+
+    <div class="view" id="view-log">
+      <div class="section-label">GRIMOIRE — YOUR CHRONICLE</div>
+      <div id="adventureLog"><div class="empty-log">The chronicle is blank.<br>Begin your first ritual.</div></div>
+    </div>
+
+    <div class="view" id="view-progress">
+      <div class="streak-card">
+        <div class="streak-numbers">
+          <div class="streak-num-block">
+            <span class="streak-num-label">CURRENT STREAK</span>
+            <span class="streak-num-val" id="currentStreak">0</span>
+          </div>
+          <div class="streak-num-block">
+            <span class="streak-num-label">BEST STREAK</span>
+            <span class="streak-num-val best" id="bestStreak">0</span>
+          </div>
+        </div>
+        <div class="streak-message" id="streakMessage">Begin your chronicle to start your streak.</div>
+      </div>
+      <div class="section-label">LAST 7 DAYS</div>
+      <div class="streak-row" id="streakRow"></div>
+      <div class="streak-dates" id="streakDates"></div>
+      <div class="divider"></div>
+      <div class="section-label">FORTITUDE — BEST LIFTS</div>
+      <div id="strengthChart"></div>
+      <div class="divider"></div>
+      <div class="section-label">HEARTH RECORD</div>
+      <div id="hearthRecord"></div>
+      <div class="divider"></div>
+      <div class="section-label">VIGIL RECORD</div>
+      <div id="vigilRecord"></div>
+    </div>
+
+    <div class="view" id="view-data">
+      <div class="section-label">CODEX — CHRONICLE MANAGEMENT</div>
+      <button class="export-btn" onclick="exportData()">EXPORT CHRONICLE</button>
+      <button class="export-btn" onclick="document.getElementById('importFile').click()" style="margin-top:8px">RESTORE FROM CHRONICLE</button>
+      <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(event)" />
+      <div class="divider"></div>
+      <div class="section-label">WORLD THEME</div>
+      <div class="theme-picker" id="codexThemePicker">
+        <div class="theme-swatch swatch-ashen" id="codex-swatch-ashen" onclick="selectTheme('ashen')">
+          <div class="theme-swatch-dot"></div>
+          <div class="theme-swatch-name">ASHEN</div>
+        </div>
+        <div class="theme-swatch swatch-ember" id="codex-swatch-ember" onclick="selectTheme('ember')">
+          <div class="theme-swatch-dot"></div>
+          <div class="theme-swatch-name">EMBER</div>
+        </div>
+        <div class="theme-swatch swatch-woodland" id="codex-swatch-woodland" onclick="selectTheme('woodland')">
+          <div class="theme-swatch-dot"></div>
+          <div class="theme-swatch-name">WOODLAND</div>
+        </div>
+        <div class="theme-swatch swatch-dusk" id="codex-swatch-dusk" onclick="selectTheme('dusk')">
+          <div class="theme-swatch-dot"></div>
+          <div class="theme-swatch-name">DUSK</div>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <button class="danger-btn" onclick="resetCharacter()">START NEW CHARACTER</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ─── CLASS DEFINITIONS ───
+const PRIMARY_CLASSES = [
+  { key:'arcanist', name:'Arcanist', icon:'✦', desc:'Magic through discipline and repetition. Power accumulated, never inherited.',
+    color:'var(--arc-purple)',
+    titles:[[1,'Apprentice Arcanist'],[3,'Initiate of the Ley'],[5,'Channeller'],[8,'Arcanist'],[12,'Ley Warden'],[16,'Veilbreaker'],[20,'Arcanist Prime']],
+    flavour:{ ritual:['The ley lines hold today. Another ritual sealed, another thread woven.','The Arcanist trained. The world noticed, even if no one else did.','Power accumulates through repetition. Kure adds to the reserve.','The ritual is complete. The ley lines pulse with quiet gratitude.','Discipline is the Arcanist\'s magic. Tonight it was practised.'] }
+  },
+  { key:'sentinel', name:'Sentinel', icon:'🛡', desc:'A guardian who trains to protect. Strength in service of something larger.',
+    color:'var(--arc-mid)',
+    titles:[[1,'Watchman'],[3,'Ward'],[5,'Sentinel'],[8,'Ironguard'],[12,'Bastion'],[16,'The Unyielding'],[20,'Eternal Shield']],
+    flavour:{ ritual:['The Sentinel stood and trained. The world is safer for it.','Strength built today is protection offered tomorrow.','The Ironguard does not train for themselves. The world is the reason.','Another session sealed. The Sentinel grows more capable.','Discipline is protection. The Sentinel understands this deeply.'] }
+  },
+  { key:'waywalker', name:'Waywalker', icon:'🌿', desc:'Strength through movement and adaptability. Power found on the path, not the destination.',
+    color:'var(--arc-teal)',
+    titles:[[1,'Wanderer'],[3,'Pathfinder'],[5,'Waywalker'],[8,'Trailbinder'],[12,'The Unmoored'],[16,'Horizon Seeker'],[20,'Walker of All Ways']],
+    flavour:{ ritual:['The Waywalker moved. Every session is a step further down the path.','Adaptability is strength. The Waywalker trained and grew more capable.','The path does not end. Another ritual complete, another stride taken.','The Waywalker does not ask if the road is hard. They walk it.','Motion is the Waywalker\'s nature. Today that nature was honoured.'] }
+  },
+  { key:'ironwright', name:'Ironwright', icon:'⚒', desc:'Forged through grind and raw discipline. No shortcuts. No excuses. Just work.',
+    color:'var(--arc-coral)',
+    titles:[[1,'Apprentice Smith'],[3,'Forgehand'],[5,'Ironwright'],[8,'Tempered'],[12,'The Forged'],[16,'Ironbound'],[20,'The Unbreakable']],
+    flavour:{ ritual:['The Ironwright does not seek elegance. They seek results. Ritual sealed.','Iron is made in heat and pressure. So is this.','No excuses. No shortcuts. The work was done.','The Ironwright showed up. That is always the hardest part.','Forged again today. The process is never comfortable. It is always worth it.'] }
+  },
+  { key:'runeseeker', name:'Runeseeker', icon:'ᚱ', desc:'Power drawn from ancient symbols and the natural world. Patient, intuitive, deliberate.',
+    color:'var(--arc-gold)',
+    titles:[[1,'Glyph Student'],[3,'Rune Reader'],[5,'Runeseeker'],[8,'Sigil Keeper'],[12,'The Inscribed'],[16,'Runemaster'],[20,'Voice of the Ancient Marks']],
+    flavour:{ ritual:['The runes were read in sweat and effort today. The ancient marks hold.','Each session inscribes something deeper. The Runeseeker grows in patience.','The body is a text. Today another line was written into it.','Ancient power comes to those who show up consistently. Ritual sealed.','The Runeseeker does not rush. The work today was careful and complete.'] }
+  },
+  { key:'moonbound', name:'Moonbound', icon:'🌙', desc:'Power that waxes and wanes with intention. Spiritual energy channelled through stillness.',
+    color:'var(--arc-moon)',
+    titles:[[1,'Moon Initiate'],[3,'Tide Follower'],[5,'Moonbound'],[8,'Lunar Channeller'],[12,'Keeper of the Tides'],[16,'Eclipse Walker'],[20,'The Eternal Moon']],
+    flavour:{ ritual:['The moon witnessed the work today. Its light does not judge — only reflects.','Energy channelled through intention. The Moonbound grows in quiet power.','Waxing or waning, the Moonbound shows up. The tides do not negotiate.','The spiritual and the physical are not separate. Today they moved together.','Stillness is not weakness. The Moonbound knows this. The ritual is sealed.'] }
+  },
+  { key:'spiritwalker', name:'Spiritwalker', icon:'🔮', desc:'Attuned to unseen forces. Strength that comes from within rather than without.',
+    color:'var(--arc-vigil)',
+    titles:[[1,'Spirit Touched'],[3,'Veil Listener'],[5,'Spiritwalker'],[8,'Threadweaver'],[12,'The Attuned'],[16,'Soul Keeper'],[20,'Voice Between Worlds']],
+    flavour:{ ritual:['The Spiritwalker listened inward and trained. Both were necessary today.','Unseen forces move through those who do the work. Ritual sealed.','The body is the vessel. Today it was honoured.','Spirit and sinew are not in conflict. The Spiritwalker knows this deeply.','The work was done with intention. The unseen world witnessed.'] }
+  },
+  { key:'hexweaver', name:'Hexweaver', icon:'🕯', desc:'Old craft, smoke and intention. Power drawn from love, confidence and natural energy.',
+    color:'#8B5A9A',
+    titles:[[1,'Hedge Witch'],[3,'Smoke Weaver'],[5,'Hexweaver'],[8,'Keeper of Smoke'],[12,'Weavemistress'],[16,'The Unbound'],[20,'Eternal Flame of the Craft']],
+    flavour:{ ritual:['The craft is in the doing, not the knowing. The Hexweaver trained and grew.','Smoke and intention — both require showing up. The ritual is sealed.','Old power comes to those who tend it. Today it was tended.','The Hexweaver wove strength into themselves today. The candle holds.','Love and discipline are not opposites. The Hexweaver practised both.'] }
+  }
+];
+
+const HEARTH_CLASSES = [
+  { key:'hearthbinder', name:'Hearthbinder', icon:'🔥', desc:'Warmth and resistance through cooking. Every meal a small act of defiance.',
+    titles:[[1,'Kitchen Apprentice'],[3,'Hearthkeeper'],[5,'Hearthbinder'],[8,'Flame Warden'],[12,'Sovereign of the Hearth'],[16,'Hearth Eternal'],[20,'The Undying Flame']]
+  },
+  { key:'provisioneer', name:'Provisioneer', icon:'🎒', desc:'Keeping yourself fuelled and ready. Practical, reliable, no-nonsense nourishment.',
+    titles:[[1,'Field Cook'],[3,'Provision Hand'],[5,'Provisioneer'],[8,'Supply Master'],[12,'The Provisioned'],[16,'Logistics Sovereign'],[20,'The Ever-Ready']]
+  },
+  { key:'moonkitchen', name:'Moon Kitchen', icon:'🌕', desc:'Food as ritual, every meal an offering. Nourishment with intention and care.',
+    titles:[[1,'Moon Kitchen Novice'],[3,'Lunar Cook'],[5,'Moon Kitchen'],[8,'Tide Table Keeper'],[12,'The Offering Cook'],[16,'Feast of the Moon'],[20,'The Eternal Table']]
+  },
+  { key:'herbwarden', name:'Herb Warden', icon:'🌿', desc:'Rooted in wholesome craft. Feeding body and spirit with natural ingredients.',
+    titles:[[1,'Herb Gatherer'],[3,'Root Cook'],[5,'Herb Warden'],[8,'Garden Keeper'],[12,'The Rooted'],[16,'Warden of Green Things'],[20,'Voice of the Garden']]
+  },
+  { key:'cauldronkeeper', name:'Cauldron Keeper', icon:'🫕', desc:'The kitchen as altar. Every ingredient chosen with purpose. Cooking as spellwork.',
+    titles:[[1,'Cauldron Apprentice'],[3,'Brew Hand'],[5,'Cauldron Keeper'],[8,'Potion Crafter'],[12,'The Brewed'],[16,'Sovereign of the Cauldron'],[20,'The Eternal Brew']]
+  }
+];
+
+const ALL_VIGIL_HABITS = [
+  { key:'study', icon:'📖', name:'The Study', desc:'Read for 30 minutes', xp:15,
+    flavour:['The pages turned. The mind sharpened. The Study is its own kind of power.','Thirty minutes with a text. The one who stops learning stops growing.','The Study complete. Knowledge is a ley line that never runs dry.','A quiet session with a book. The world held because someone bothered to think.','The text was opened and honoured. Sharper in the stillness.']
+  },
+  { key:'rest', icon:'🌙', name:'The Rest', desc:'Asleep before midnight', xp:15,
+    flavour:['Surrender to sleep before midnight. Rest is not weakness. It is preparation.','The body repairs what the will cannot. Early sleep honoured tonight.','Sleep before midnight. The simplest ritual. The most often broken.','The Rest observed. Tomorrow\'s rituals begin with tonight\'s recovery.','In bed before midnight. This is harder than it sounds. It counts.']
+  },
+  { key:'bond', icon:'🤝', name:'The Bond', desc:'Checked in on someone', xp:20,
+    flavour:['The world holds through connections, not just power. The Bond maintained.','A message sent, a call made. This is how worlds survive.','The fabric of things is woven between people. Someone was reached today.','An Arcanist who loses their connections loses their reason to fight.','The world frays when people stop talking. Today, someone talked.']
+  },
+  { key:'upkeep', icon:'⚗️', name:'The Rite of Upkeep', desc:'Physical maintenance done', xp:10,
+    flavour:['The vessel was tended. You cannot channel through a neglected body.','Physical maintenance observed. The body is the instrument. It was tuned.','The Rite of Upkeep complete. Unglamorous. Essential.','Small maintenance done. The world needs you functional, not just powerful.','The body was honoured in the small ways that compound over time.']
+  },
+  { key:'revelation', icon:'💡', name:'The Revelation', desc:'Learned something new', xp:20,
+    flavour:['Something new absorbed today. Every Revelation is a ley line reinforced.','The mind encountered the unknown and did not flinch. The Revelation is sealed.','In a world sliding toward entropy, curiosity is resistance.','Knowledge is the one resource the world cannot take from you.','The unknown became known. Small shift. Real power.']
+  },
+  { key:'movement', icon:'🚶', name:'The Movement', desc:'Went outside, walked, touched grass', xp:15,
+    flavour:['The outside world was met today. The Vigil moves beyond four walls.','Feet on ground. Air on skin. The Movement complete.','The world outside waits for those who leave the cave. Today someone did.','Movement is medicine. The body was taken somewhere it could breathe.','The Movement observed. Small geography. Real restoration.']
+  },
+  { key:'craft', icon:'🎨', name:'The Craft', desc:'Worked on a creative project', xp:20,
+    flavour:['The Craft was practised. Creating is its own form of world-keeping.','Something was made today that did not exist before. The Craft holds.','Creative work is not separate from the rest. It feeds everything.','The Craft observed. The world needs makers as much as fighters.','An hour given to creation. The ley lines of imagination were reinforced.']
+  },
+  { key:'offering', icon:'💛', name:'The Offering', desc:'Were kind to yourself today', xp:20,
+    flavour:['Compassion turned inward today. The hardest direction. The most necessary.','The Offering made. You cannot pour from an empty vessel.','Kindness to the self is not indulgence. It is maintenance.','The world needs you whole. Today you chose to treat yourself accordingly.','The Offering observed. Self-compassion is a discipline too.']
+  },
+  { key:'reckoning', icon:'✊', name:'The Reckoning', desc:'Gave what you had today', xp:15,
+    flavour:['The Reckoning complete. On some days, showing up is everything.','What was available was given. That is always enough.','Not every day is a good day. Giving what you have anyway is the practice.','The Reckoning observed. Effort without perfection still counts.','Today\'s best was given. The chronicle records it without judgement.']
+  },
+  { key:'gift', icon:'😊', name:'The Gift', desc:'Made someone smile today', xp:20,
+    flavour:['Light was brought to someone else\'s world today. The world noticed.','The Gift given. A smile costs nothing and changes everything.','In a world on the brink, moments of joy are acts of resistance.','Someone smiled because of something done today. The Gift is sealed.','The Gift observed. Small moments of connection hold the world together.']
+  },
+  { key:'calling', icon:'🔥', name:'The Calling', desc:'Found motivation today', xp:15,
+    flavour:['Something stirred today. The spark that makes the rest possible.','The Calling answered. Motivation is not found — it is built through action.','A moment of drive was noticed and honoured. The Calling is sealed.','The fire was felt today. Small ember. Real heat.','The Calling observed. Hold onto the feeling. Let it compound.']
+  }
+];
+
+const MEALS = [
+  {name:"Spaghetti Bolognese",desc:"Mince, pasta, sauce. Twenty minutes. The oldest rite in any kitchen."},
+  {name:"Jerk Chicken & Rice",desc:"Chicken breast rubbed in jerk, seared in a pan. Rice cooker does the rest."},
+  {name:"Dirty Rice",desc:"Mince, tinned tomatoes, rice, seasoning. One pan, one pot. Done."},
+  {name:"Asian Mince Noodles",desc:"Mince, noodles, soy sauce, whatever veg is around. Fifteen minutes."},
+  {name:"Bacon & Egg Rolls",desc:"Breakfast for dinner. Three rashers, two eggs, bread. Ten minutes."},
+  {name:"Sausage & Beans",desc:"Sausages in the pan, beans from the tin, bread on the side. Five minutes."},
+  {name:"Homemade Burger",desc:"Burger patty, bread, whatever you want on it. Always better than takeaway."},
+  {name:"Chicken Pasta",desc:"Chicken breast sliced, pan fried, tossed with pasta and sauce."},
+  {name:"Egg Fried Rice",desc:"Leftover rice, two eggs, soy sauce, anything in the fridge. Ten minutes."},
+  {name:"Noodle Stir Fry",desc:"Noodles, egg, soy, veg from the fridge. One pan. Better than it sounds."},
+  {name:"Tomato & Mince Pasta",desc:"Tinned tomatoes, mince, seasoning, pasta. Different from bolognese. Just as easy."},
+  {name:"Chicken & Rice Bowl",desc:"Grilled chicken, rice cooker rice, soy drizzle. Simple, clean, satisfying."},
+  {name:"Cheesy Scrambled Eggs on Toast",desc:"Eggs, cheese, bread. Add bacon if you have it. The underrated weeknight win."},
+  {name:"Mince Tacos",desc:"Mince, seasoning, bread or whatever wrapper you have. Officially delicious."}
+];
+
+const MEAL_FLAVOUR = [
+  "A hearthbound meal in uncertain times. The act of cooking is itself a form of resistance.",
+  "The body was fed tonight. In a world sliding toward entropy, a cooked meal is revolutionary.",
+  "Simple food, made by hand. The world does not need grand gestures. It needs this, repeated.",
+  "Not a feast. A meal. That is enough. The world is held together by enough.",
+  "The act of cooking is the act of caring for the future. Tonight that care was given.",
+  "Food made at home carries something takeaway cannot. The world knows the difference.",
+  "Another evening, another cooked meal. The hearth's tally grows. The world is grateful.",
+  "Sustenance crafted by hand. The simplest magic. The most necessary.",
+  "A meal does not need to be perfect to be powerful. It needs to be made. This one was.",
+  "The hearth burned tonight. Tomorrow the rituals continue.",
+  "Something was made from what was available. That is always the Hearthbinder's way.",
+  "The kitchen was entered and something good came out of it. That is the whole practice.",
+  "Nourishment given to the body that does the work. The cycle is honoured."
+];
+
+const EXERCISE_GOALS = [
+  { key:'strength', icon:'⚔️', name:'Strength & Muscle', desc:'Compound lifts, progressive overload. Build real strength over time.' },
+  { key:'fitness', icon:'🏃', name:'General Fitness', desc:'Mix of resistance and functional movement. Feel capable and energetic.' },
+  { key:'wellbeing', icon:'🌱', name:'Health & Wellbeing', desc:'Lighter resistance, mobility and movement. Accessible and sustainable.' }
+];
+
+const ALL_SESSIONS = {
+  strength: [
+    { name:"The Grounding Rite", focus:"Lower Body + Pull", exercises:[
+      {name:"Barbell Squat",muscle:"Quads / Glutes",sets:3,reps:"8–10",key:"squat"},
+      {name:"Romanian Deadlift",muscle:"Hamstrings / Lower back",sets:3,reps:"8–10",key:"rdl"},
+      {name:"Lat Pulldown",muscle:"Back / Biceps",sets:3,reps:"10–12",key:"latpull"}
+    ]},
+    { name:"The Channelling", focus:"Upper Body Push", exercises:[
+      {name:"Bench Press",muscle:"Chest / Triceps",sets:3,reps:"8–10",key:"bench"},
+      {name:"Overhead Press",muscle:"Shoulders",sets:3,reps:"8–10",key:"ohp"},
+      {name:"Cable Tricep Pushdown",muscle:"Triceps",sets:3,reps:"12–15",key:"tricep"}
+    ]},
+    { name:"The Binding", focus:"Upper Body Pull + Core", exercises:[
+      {name:"Seated Cable Row",muscle:"Back / Biceps",sets:3,reps:"10–12",key:"row"},
+      {name:"Dumbbell Curl",muscle:"Biceps",sets:3,reps:"10–12",key:"curl"},
+      {name:"Plank Hold",muscle:"Core",sets:3,reps:"30–45s",key:"plank"}
+    ]}
+  ],
+  fitness: [
+    { name:"The Grounding Rite", focus:"Lower Body + Cardio", exercises:[
+      {name:"Goblet Squat",muscle:"Quads / Glutes",sets:3,reps:"12–15",key:"gobletsquat"},
+      {name:"Dumbbell Lunge",muscle:"Legs / Balance",sets:3,reps:"10 each leg",key:"lunge"},
+      {name:"Treadmill / Bike",muscle:"Cardio",sets:1,reps:"10 mins",key:"cardio1"}
+    ]},
+    { name:"The Channelling", focus:"Full Body Push + Pull", exercises:[
+      {name:"Dumbbell Chest Press",muscle:"Chest / Triceps",sets:3,reps:"10–12",key:"dbpress"},
+      {name:"Single Arm DB Row",muscle:"Back / Biceps",sets:3,reps:"10–12",key:"drow"},
+      {name:"Dumbbell Shoulder Press",muscle:"Shoulders",sets:3,reps:"10–12",key:"dbohp"}
+    ]},
+    { name:"The Binding", focus:"Core + Functional", exercises:[
+      {name:"Kettlebell / DB Deadlift",muscle:"Full posterior chain",sets:3,reps:"10–12",key:"dbdl"},
+      {name:"Cable Woodchop",muscle:"Core / Rotation",sets:3,reps:"12 each side",key:"woodchop"},
+      {name:"Plank Hold",muscle:"Core",sets:3,reps:"30–45s",key:"plank"}
+    ]}
+  ],
+  wellbeing: [
+    { name:"The Grounding Rite", focus:"Lower Body + Mobility", exercises:[
+      {name:"Bodyweight Squat",muscle:"Quads / Glutes",sets:3,reps:"15",key:"bwsquat"},
+      {name:"Hip Hinge / Good Morning",muscle:"Hamstrings / Lower back",sets:3,reps:"12",key:"goodmorning"},
+      {name:"Seated Leg Press (light)",muscle:"Quads / Glutes",sets:3,reps:"15",key:"legpress"}
+    ]},
+    { name:"The Channelling", focus:"Upper Body + Breath", exercises:[
+      {name:"Cable Chest Fly",muscle:"Chest — controlled movement",sets:3,reps:"15",key:"chestfly"},
+      {name:"Lat Pulldown (light)",muscle:"Back / Biceps",sets:3,reps:"12–15",key:"latpull"},
+      {name:"Lateral Raises",muscle:"Shoulders",sets:3,reps:"15",key:"lateralraise"}
+    ]},
+    { name:"The Binding", focus:"Stretch + Core", exercises:[
+      {name:"Face Pulls",muscle:"Rear Delts / Posture",sets:3,reps:"15–20",key:"facepull"},
+      {name:"Dead Bug",muscle:"Core — slow and controlled",sets:3,reps:"8 each side",key:"deadbug"},
+      {name:"Treadmill Walk",muscle:"Light cardio / Recovery",sets:1,reps:"10 mins",key:"treadwalk"}
+    ]}
+  ]
+};
+
+const ALL_SWAPS = {
+  // Strength
+  squat:[{name:"Leg Press",muscle:"Quads / Glutes",sets:3,reps:"10–12",key:"legpress"},{name:"Hack Squat",muscle:"Quads / Glutes",sets:3,reps:"10–12",key:"hacksquat"}],
+  rdl:[{name:"Lying Leg Curl",muscle:"Hamstrings",sets:3,reps:"10–12",key:"legcurl"},{name:"Good Mornings",muscle:"Hamstrings / Lower back",sets:3,reps:"10–12",key:"goodmorning"}],
+  latpull:[{name:"Assisted Pull Up",muscle:"Back / Biceps",sets:3,reps:"8–10",key:"pullup"},{name:"Straight Arm Pulldown",muscle:"Back",sets:3,reps:"12–15",key:"pulldown"}],
+  bench:[{name:"Dumbbell Chest Press",muscle:"Chest / Triceps",sets:3,reps:"10–12",key:"dbpress"},{name:"Cable Chest Fly",muscle:"Chest",sets:3,reps:"12–15",key:"chestfly"}],
+  ohp:[{name:"Dumbbell Shoulder Press",muscle:"Shoulders",sets:3,reps:"10–12",key:"dbohp"},{name:"Lateral Raises",muscle:"Shoulders",sets:3,reps:"12–15",key:"lateralraise"}],
+  tricep:[{name:"Skull Crushers",muscle:"Triceps",sets:3,reps:"10–12",key:"skullcrusher"},{name:"Overhead Tricep Extension",muscle:"Triceps",sets:3,reps:"12–15",key:"triceptext"}],
+  row:[{name:"Single Arm DB Row",muscle:"Back / Biceps",sets:3,reps:"10–12",key:"drow"},{name:"Face Pulls",muscle:"Rear Delts / Upper back",sets:3,reps:"15–20",key:"facepull"}],
+  curl:[{name:"Hammer Curl",muscle:"Biceps / Forearms",sets:3,reps:"10–12",key:"hammercurl"},{name:"Cable Curl",muscle:"Biceps",sets:3,reps:"12–15",key:"cablecurl"}],
+  plank:[{name:"Dead Bug",muscle:"Core",sets:3,reps:"8 each side",key:"deadbug"},{name:"Ab Wheel Rollout",muscle:"Core",sets:3,reps:"8–10",key:"abwheel"}],
+  // Fitness
+  gobletsquat:[{name:"Leg Press",muscle:"Quads / Glutes",sets:3,reps:"12–15",key:"legpress"},{name:"Step Ups",muscle:"Quads / Glutes",sets:3,reps:"10 each",key:"stepup"}],
+  lunge:[{name:"Split Squat",muscle:"Legs / Balance",sets:3,reps:"10 each",key:"splitsquat"},{name:"Leg Extension",muscle:"Quads",sets:3,reps:"12–15",key:"legext"}],
+  cardio1:[{name:"Rowing Machine",muscle:"Full body cardio",sets:1,reps:"10 mins",key:"rowmachine"},{name:"Cross Trainer",muscle:"Low impact cardio",sets:1,reps:"10 mins",key:"crosstrainer"}],
+  drow:[{name:"Cable Row",muscle:"Back / Biceps",sets:3,reps:"12",key:"row"},{name:"Lat Pulldown",muscle:"Back / Biceps",sets:3,reps:"12",key:"latpull"}],
+  dbohp:[{name:"Cable Lateral Raise",muscle:"Shoulders",sets:3,reps:"15",key:"lateralraise"},{name:"Arnold Press",muscle:"Shoulders",sets:3,reps:"10–12",key:"arnoldpress"}],
+  dbdl:[{name:"Romanian Deadlift",muscle:"Hamstrings / Lower back",sets:3,reps:"12",key:"rdl"},{name:"Hip Thrust",muscle:"Glutes",sets:3,reps:"12–15",key:"hipthrust"}],
+  woodchop:[{name:"Pallof Press",muscle:"Core / Anti-rotation",sets:3,reps:"12 each",key:"pallof"},{name:"Russian Twist",muscle:"Core / Rotation",sets:3,reps:"20",key:"rustwist"}],
+  // Wellbeing
+  bwsquat:[{name:"Seated Leg Press (light)",muscle:"Quads / Glutes",sets:3,reps:"15",key:"legpress"},{name:"Step Ups",muscle:"Legs / Balance",sets:3,reps:"10 each",key:"stepup"}],
+  goodmorning:[{name:"Lying Leg Curl",muscle:"Hamstrings",sets:3,reps:"12–15",key:"legcurl"},{name:"Back Extension (light)",muscle:"Lower back",sets:3,reps:"12",key:"backext"}],
+  chestfly:[{name:"Dumbbell Chest Press (light)",muscle:"Chest",sets:3,reps:"15",key:"dbpress"},{name:"Push Up (assisted if needed)",muscle:"Chest / Triceps",sets:3,reps:"10",key:"pushup"}],
+  facepull:[{name:"Band Pull Apart",muscle:"Rear Delts / Posture",sets:3,reps:"20",key:"bandpull"},{name:"Reverse Fly",muscle:"Rear Delts",sets:3,reps:"15",key:"revfly"}],
+  deadbug:[{name:"Bird Dog",muscle:"Core / Balance",sets:3,reps:"8 each side",key:"birddog"},{name:"Seated Cable Crunch",muscle:"Core",sets:3,reps:"15",key:"crunch"}],
+  treadwalk:[{name:"Recumbent Bike",muscle:"Low impact cardio",sets:1,reps:"10 mins",key:"recumbent"},{name:"Cross Trainer (easy)",muscle:"Low impact cardio",sets:1,reps:"10 mins",key:"crosstrainer"}],
+  dbpress:[{name:"Cable Chest Fly",muscle:"Chest",sets:3,reps:"12–15",key:"chestfly"},{name:"Push Up",muscle:"Chest / Triceps",sets:3,reps:"10–12",key:"pushup"}],
+  legpress:[{name:"Goblet Squat",muscle:"Quads / Glutes",sets:3,reps:"12",key:"gobletsquat"},{name:"Leg Extension",muscle:"Quads",sets:3,reps:"15",key:"legext"}]
+};
+
+const XP_PER_LEVEL = 100;
+
+// ─── STATE ───
+let data = null;
+let currentExerciseLogs = {};
+let completedExercises = new Set();
+let currentMealIndex = 0;
+let selectedPrimary = null;
+let selectedHearth = null;
+let selectedVigil = new Set();
+let selectedGoal = null;
+
+// ─── CREATION SCREEN ───
+function buildCreationScreen() {
+  const pg = document.getElementById('primaryClassGrid');
+  pg.innerHTML = PRIMARY_CLASSES.map(c => `
+    <div class="class-option" id="primary-${c.key}" onclick="selectPrimary('${c.key}')">
+      <div class="class-option-icon">${c.icon}</div>
+      <div class="class-option-name">${c.name}</div>
+      <div class="class-option-desc">${c.desc}</div>
+    </div>`).join('');
+
+  const hg = document.getElementById('hearthClassGrid');
+  hg.innerHTML = HEARTH_CLASSES.map(c => `
+    <div class="class-option" id="hearth-${c.key}" onclick="selectHearth('${c.key}')">
+      <div class="class-option-icon">${c.icon}</div>
+      <div class="class-option-name">${c.name}</div>
+      <div class="class-option-desc">${c.desc}</div>
+    </div>`).join('');
+
+  const gg = document.getElementById('goalOptionGrid');
+  gg.innerHTML = EXERCISE_GOALS.map(g => `
+    <div class="vigil-option" id="goal-${g.key}" onclick="selectGoal('${g.key}')">
+      <div class="vigil-option-icon">${g.icon}</div>
+      <div class="vigil-option-info">
+        <div class="vigil-option-name">${g.name}</div>
+        <div class="vigil-option-desc">${g.desc}</div>
+      </div>
+      <div class="vigil-check-mark">✦</div>
+    </div>`).join('');
+
+  const vg = document.getElementById('vigilOptionGrid');
+  vg.innerHTML = ALL_VIGIL_HABITS.map(h => `
+    <div class="vigil-option" id="vigilopt-${h.key}" onclick="toggleVigil('${h.key}')">
+      <div class="vigil-option-icon">${h.icon}</div>
+      <div class="vigil-option-info">
+        <div class="vigil-option-name">${h.name}</div>
+        <div class="vigil-option-desc">${h.desc}</div>
+      </div>
+      <div class="vigil-check-mark">✦</div>
+    </div>`).join('');
+}
+
+function selectGoal(key) {
+  selectedGoal = key;
+  document.querySelectorAll('.vigil-option').forEach(el => { if (el.id.startsWith('goal-')) el.classList.remove('selected'); });
+  document.getElementById('goal-' + key).classList.add('selected');
+  checkBeginBtn();
+}
+
+function selectPrimary(key) {
+  selectedPrimary = key;
+  document.querySelectorAll('.class-option').forEach(el => { if (el.id.startsWith('primary-')) el.classList.remove('selected'); });
+  document.getElementById('primary-' + key).classList.add('selected');
+  checkBeginBtn();
+}
+
+function selectHearth(key) {
+  selectedHearth = key;
+  document.querySelectorAll('.class-option').forEach(el => { if (el.id.startsWith('hearth-')) el.classList.remove('selected'); });
+  document.getElementById('hearth-' + key).classList.add('selected');
+  checkBeginBtn();
+}
+
+function toggleVigil(key) {
+  if (selectedVigil.has(key)) {
+    selectedVigil.delete(key);
+    document.getElementById('vigilopt-' + key).classList.remove('selected');
+  } else {
+    selectedVigil.add(key);
+    document.getElementById('vigilopt-' + key).classList.add('selected');
+  }
+  checkBeginBtn();
+}
+
+function checkBeginBtn() {
+  const name = document.getElementById('charNameInput').value.trim();
+  document.getElementById('beginBtn').disabled = !name || !selectedPrimary || !selectedHearth || !selectedGoal || selectedVigil.size === 0;
+}
+
+document.getElementById('charNameInput').addEventListener('input', checkBeginBtn);
+
+function beginChronicle() {
+  const name = document.getElementById('charNameInput').value.trim();
+  if (!name || !selectedPrimary || !selectedHearth || !selectedGoal || selectedVigil.size === 0) return;
+  data = {
+    charName: name,
+    primaryClass: selectedPrimary,
+    hearthClass: selectedHearth,
+    exerciseGoal: selectedGoal,
+    theme: document.body.className.replace('theme-','') || 'ashen',
+    vigilHabits: Array.from(selectedVigil),
+    xp:0, level:1, arcXp:0, arcLevel:1, hearthXp:0, hearthLevel:1,
+    discipline:0, fortitude:0, resonance:0, sustenance:0, worldHealth:10,
+    sessions:[], adventureLog:[], bestLifts:{}, mealsCrafted:0, takeaways:0,
+    vigilLog:{}, lastSessionDate:null, sessionIndex:0,
+    sessionSwaps:{}, activeExercises:{}
+  };
+  saveData(data);
+  launchApp();
+}
+
+// ─── HELPERS ───
+function getPrimaryClass() { return PRIMARY_CLASSES.find(c => c.key === data.primaryClass) || PRIMARY_CLASSES[0]; }
+function getHearthClass() { return HEARTH_CLASSES.find(c => c.key === data.hearthClass) || HEARTH_CLASSES[0]; }
+function getActiveVigil() { return ALL_VIGIL_HABITS.filter(h => data.vigilHabits && data.vigilHabits.includes(h.key)); }
+
+function getClassTitle(level, titles) {
+  let t = titles[0][1];
+  for (let [l, name] of titles) { if (level >= l) t = name; }
+  return t;
+}
+function pickRandom(arr, excludeIdx) {
+  const pool = excludeIdx !== undefined ? arr.filter((_,i) => i !== excludeIdx) : arr;
+  return pool[Math.floor(Math.random() * pool.length)];
+}
+function todayStr() { return new Date().toISOString().split('T')[0]; }
+function loadData() { try { return JSON.parse(localStorage.getItem('rpgfit_v4') || 'null'); } catch { return null; } }
+function saveData(d) { try { localStorage.setItem('rpgfit_v4', JSON.stringify(d)); } catch {} }
+function getSessions() { return ALL_SESSIONS[data.exerciseGoal || 'strength']; }
+function getSwaps() { return ALL_SWAPS; }
+function getCurrentSession() { const sessions = getSessions(); return sessions[data.sessionIndex % sessions.length]; }
+
+function gainXP(amount) {
+  data.xp += amount;
+  while (data.xp >= data.level * XP_PER_LEVEL) { data.xp -= data.level * XP_PER_LEVEL; data.level++; }
+}
+
+// ─── LAUNCH ───
+function launchApp() {
+  document.getElementById('creationScreen').classList.add('hidden');
+  document.getElementById('mainApp').classList.remove('hidden');
+  const pc = getPrimaryClass();
+  const hc = getHearthClass();
+  document.getElementById('primaryClassLabel').textContent = pc.name.toUpperCase();
+  document.getElementById('hearthClassLabel').textContent = hc.name.toUpperCase();
+  document.getElementById('charSigil').textContent = pc.icon;
+  document.getElementById('hearthViewTitle').textContent = hc.name + '\'s Kitchen';
+  currentMealIndex = Math.floor(Math.random() * MEALS.length);
+  document.getElementById('suggestionMeal').textContent = MEALS[currentMealIndex].name;
+  document.getElementById('suggestionDesc').textContent = MEALS[currentMealIndex].desc;
+  const theme = data.theme || 'ashen';
+  ['ashen','ember','woodland','dusk'].forEach(t => {
+    const el = document.getElementById('codex-swatch-' + t);
+    if (el) el.classList.toggle('selected', t === theme);
+  });
+  updateHeader(false);
+  renderSession();
+}
+
+// ─── HEADER ───
+function updateHeader(levelUp) {
+  const pc = getPrimaryClass();
+  const hc = getHearthClass();
+  const xpForNext = data.level * XP_PER_LEVEL;
+  document.getElementById('charNameDisplay').textContent = data.charName;
+  document.getElementById('levelBadge').textContent = 'LVL ' + data.level;
+  document.getElementById('xpBarFill').style.width = Math.min(100, Math.round((data.xp / xpForNext)*100)) + '%';
+  document.getElementById('xpLabel').textContent = data.xp + ' / ' + xpForNext + ' XP';
+  document.getElementById('charTitle').textContent = getClassTitle(data.arcLevel, pc.titles) + ' · ' + getClassTitle(data.hearthLevel, hc.titles);
+  document.getElementById('statDiscipline').textContent = data.discipline;
+  document.getElementById('statFortitude').textContent = data.fortitude;
+  document.getElementById('statResonance').textContent = data.resonance;
+  document.getElementById('worldBarFill').style.width = Math.min(100, data.worldHealth) + '%';
+  document.getElementById('worldVal').textContent = Math.min(100, data.worldHealth);
+  document.getElementById('arcLevel').textContent = 'LVL ' + data.arcLevel;
+  document.getElementById('arcXpFill').style.width = Math.min(100, Math.round((data.arcXp / (data.arcLevel * XP_PER_LEVEL))*100)) + '%';
+  document.getElementById('hearthLevel').textContent = 'LVL ' + data.hearthLevel;
+  document.getElementById('hearthXpFill').style.width = Math.min(100, Math.round((data.hearthXp / (data.hearthLevel * XP_PER_LEVEL))*100)) + '%';
+  document.getElementById('mealsCrafted').textContent = data.mealsCrafted;
+  document.getElementById('statSustenance').textContent = data.sustenance;
+  if (levelUp) {
+    document.getElementById('levelUpTitle').textContent = 'The world shifts.';
+    document.getElementById('levelUpText').textContent = data.charName + ' ascends — Level ' + data.level + ' ' + getClassTitle(data.arcLevel, pc.titles);
+    const b = document.getElementById('levelUpBanner');
+    b.classList.add('show');
+    setTimeout(() => b.classList.remove('show'), 4000);
+  }
+}
+
+// ─── SESSION ───
+function renderSession() {
+  const session = getCurrentSession();
+  document.getElementById('sessionTitle').textContent = session.name + ' — ' + session.focus;
+  const list = document.getElementById('exerciseList');
+  list.innerHTML = '';
+  currentExerciseLogs = {}; completedExercises = new Set();
+  if (!data.sessionSwaps) data.sessionSwaps = {};
+  if (!data.activeExercises) data.activeExercises = {};
+
+  session.exercises.forEach((ex, i) => {
+    const savedActive = data.activeExercises[i];
+    const active = savedActive ? savedActive : ex;
+    const swapsLeft = 2 - (data.sessionSwaps[i] || 0);
+    const best = data.bestLifts[active.key];
+    const bestStr = best ? 'Best: ' + best.weight + 'kg \u00d7 ' + best.reps + ' reps' : 'No record yet — start light';
+    const card = document.createElement('div');
+    card.className = 'exercise-card'; card.id = 'excard-' + i;
+    const swapLocked = swapsLeft <= 0;
+    card.innerHTML = `
+      <div class="ex-header">
+        <div style="flex:1"><div class="ex-name">${active.name}</div><div class="ex-muscle">${active.muscle} &middot; ${active.sets} sets &middot; ${active.reps} reps</div></div>
+        <button class="swap-btn${swapLocked?' locked':''}" id="swapbtn-${i}" onclick="swapExercise(${i})" ${swapLocked?'disabled':''}>${swapLocked?'LOCKED':'SWAP ('+swapsLeft+')'}</button>
+        <span class="ex-complete-badge" id="badge-${i}" style="display:none">Done</span>
+      </div>
+      <div class="sets-row" id="sets-${i}">${Array.from({length:active.sets},(_,s)=>`<div class="set-chip" id="chip-${i}-${s}">Set ${s+1}</div>`).join('')}</div>
+      <div class="log-row">
+        <input class="log-input" id="weight-${i}" type="number" placeholder="kg" min="0" step="0.5" inputmode="decimal"/>
+        <input class="log-input" id="reps-${i}" type="number" placeholder="reps" min="0" step="1" inputmode="numeric" style="max-width:80px"/>
+        <button class="log-btn" onclick="logSet(${i})">LOG SET</button>
+      </div>
+      <div class="prev-best" id="best-${i}">${bestStr}</div>`;
+    list.appendChild(card);
+    currentExerciseLogs[i] = {sets:0, weight:0, reps:0, key:active.key, name:active.name, totalSets:active.sets};
+  });
+  checkCompleteBtn();
+}
+
+function swapExercise(i) {
+  const session = getCurrentSession();
+  const originalKey = session.exercises[i].key;
+  const swapCount = data.sessionSwaps[i] || 0;
+  if (swapCount >= 2) return;
+  const pool = ALL_SWAPS[originalKey]; if (!pool) return;
+  const newEx = pool[swapCount];
+  data.activeExercises[i] = newEx;
+  data.sessionSwaps[i] = swapCount + 1;
+  const wasComplete = completedExercises.has(i);
+  const oldLog = currentExerciseLogs[i];
+  const swapsLeft = 2 - data.sessionSwaps[i];
+  const best = data.bestLifts[newEx.key];
+  const bestStr = best ? 'Best: ' + best.weight + 'kg \u00d7 ' + best.reps + ' reps' : 'No record yet — start light';
+  const card = document.getElementById('excard-' + i);
+  const swapLocked = swapsLeft <= 0;
+  card.className = 'exercise-card' + (wasComplete?' complete':'');
+  card.innerHTML = `
+    <div class="ex-header">
+      <div style="flex:1"><div class="ex-name">${newEx.name}</div><div class="ex-muscle">${newEx.muscle} &middot; ${newEx.sets} sets &middot; ${newEx.reps} reps</div></div>
+      <button class="swap-btn${swapLocked?' locked':''}" id="swapbtn-${i}" onclick="swapExercise(${i})" ${swapLocked?'disabled':''}>${swapLocked?'LOCKED':'SWAP ('+swapsLeft+')'}</button>
+      <span class="ex-complete-badge" id="badge-${i}" ${wasComplete?'':'style="display:none"'}>Done</span>
+    </div>
+    <div class="sets-row" id="sets-${i}">${Array.from({length:newEx.sets},(_,s)=>`<div class="set-chip" id="chip-${i}-${s}">Set ${s+1}</div>`).join('')}</div>
+    <div class="log-row">
+      <input class="log-input" id="weight-${i}" type="number" placeholder="kg" min="0" step="0.5" inputmode="decimal"/>
+      <input class="log-input" id="reps-${i}" type="number" placeholder="reps" min="0" step="1" inputmode="numeric" style="max-width:80px"/>
+      <button class="log-btn" onclick="logSet(${i})">LOG SET</button>
+    </div>
+    <div class="prev-best" id="best-${i}">${bestStr}</div>`;
+  currentExerciseLogs[i] = {sets:wasComplete?newEx.sets:0, weight:oldLog.weight, reps:oldLog.reps, key:newEx.key, name:newEx.name, totalSets:newEx.sets};
+  saveData(data);
+  showToast('Swapped to ' + newEx.name + (swapLocked?' — no swaps remaining':''));
+}
+
+function logSet(i) {
+  const weight = parseFloat(document.getElementById('weight-'+i).value);
+  const reps = parseInt(document.getElementById('reps-'+i).value);
+  if (!weight || !reps || isNaN(weight) || isNaN(reps)) { showToast('Enter weight and reps first.'); return; }
+  const log = currentExerciseLogs[i];
+  const totalSets = log.totalSets || getCurrentSession().exercises[i].sets;
+  if (log.sets < totalSets) {
+    const chip = document.getElementById('chip-'+i+'-'+log.sets);
+    if (chip) { chip.textContent = weight+'kg\u00d7'+reps; chip.classList.add('logged'); }
+    log.sets++;
+    if (weight > log.weight || (weight===log.weight && reps>log.reps)) { log.weight=weight; log.reps=reps; }
+    if (log.sets >= totalSets) {
+      completedExercises.add(i);
+      document.getElementById('excard-'+i).classList.add('complete');
+      document.getElementById('badge-'+i).style.display='inline';
+      const swapBtn = document.getElementById('swapbtn-'+i);
+      if (swapBtn) { swapBtn.classList.add('locked'); swapBtn.disabled=true; swapBtn.textContent='LOCKED'; }
+      const best = data.bestLifts[log.key];
+      if (!best || weight>best.weight || (weight===best.weight && reps>best.reps)) {
+        data.bestLifts[log.key] = {weight, reps, name:log.name};
+        document.getElementById('best-'+i).textContent = 'New best: '+weight+'kg \u00d7 '+reps+' reps';
+        data.fortitude = Math.min(999, data.fortitude+2);
+        showToast('New best lift. Fortitude +2');
+      }
+    }
+    checkCompleteBtn(); saveData(data);
+  } else { showToast('All sets logged.'); }
+}
+
+function checkCompleteBtn() {
+  document.getElementById('completeBtn').disabled = completedExercises.size < getCurrentSession().exercises.length;
+}
+
+function completeSession() {
+  const today = todayStr();
+  const session = getCurrentSession();
+  const xpGain = 50 + (data.resonance >= 3 ? 20 : 0);
+  const oldLevel = data.level;
+  gainXP(xpGain);
+  data.arcXp += xpGain;
+  while (data.arcXp >= data.arcLevel * XP_PER_LEVEL) { data.arcXp -= data.arcLevel * XP_PER_LEVEL; data.arcLevel++; }
+  data.discipline = Math.min(999, data.discipline+3);
+  data.worldHealth = Math.min(100, data.worldHealth+3);
+  const yesterday = new Date(); yesterday.setDate(yesterday.getDate()-1);
+  const yStr = yesterday.toISOString().split('T')[0];
+  if (data.lastSessionDate===yStr || data.lastSessionDate===today) data.resonance = Math.min(999, data.resonance+1);
+  else if (data.lastSessionDate && data.lastSessionDate<yStr) data.resonance = Math.max(0, data.resonance-1);
+  const pc = getPrimaryClass();
+  const flavourPool = pc.flavour.ritual || [];
+  const flavour = flavourPool.length ? pickRandom(flavourPool) : 'The ritual is sealed.';
+  const exerciseSummary = Object.values(currentExerciseLogs).filter(l=>l.sets>0).map(l=>l.name+' '+l.weight+'kg').join(', ');
+  const entry = {date:today, type:'ritual', name:session.name, focus:session.focus, exercises:exerciseSummary, xp:xpGain, flavour};
+  data.sessions.unshift(entry);
+  data.adventureLog.unshift(entry);
+  data.lastSessionDate = today;
+  data.sessionIndex = (data.sessionIndex+1) % getSessions().length;
+  data.sessionSwaps = {}; data.activeExercises = {};
+  saveData(data);
+  updateHeader(data.level > oldLevel);
+  renderSession(); renderLog(); renderProgress();
+  switchTab('session');
+  showToast('Ritual sealed. \u2736 +'+xpGain+' XP');
+}
+
+// ─── HEARTH ───
+function rerollMeal() {
+  const meal = pickRandom(MEALS, currentMealIndex);
+  currentMealIndex = MEALS.indexOf(meal);
+  document.getElementById('suggestionMeal').textContent = meal.name;
+  document.getElementById('suggestionDesc').textContent = meal.desc;
+}
+
+function doHearthXP(mealName) {
+  const today = todayStr();
+  const xpGain = 30;
+  gainXP(xpGain);
+  data.hearthXp += xpGain;
+  while (data.hearthXp >= data.hearthLevel * XP_PER_LEVEL) { data.hearthXp -= data.hearthLevel * XP_PER_LEVEL; data.hearthLevel++; }
+  data.mealsCrafted++; data.sustenance = Math.min(999, data.sustenance+2);
+  data.worldHealth = Math.min(100, data.worldHealth+1);
+  const flavour = pickRandom(MEAL_FLAVOUR);
+  const entry = {date:today, type:'hearth', name:mealName, flavour, xp:xpGain};
+  data.adventureLog.unshift(entry);
+  saveData(data); updateHeader(false); renderLog(); renderProgress();
+  showToast('Meal crafted. \u2665 +'+xpGain+' XP');
+}
+
+function craftMeal() { doHearthXP(MEALS[currentMealIndex].name); rerollMeal(); }
+
+function craftCustomMeal() {
+  const input = document.getElementById('customMealInput');
+  const mealName = input.value.trim();
+  if (!mealName) { showToast('Name your creation first.'); return; }
+  doHearthXP(mealName);
+  input.value = '';
+}
+
+function logTakeaway() {
+  const today = todayStr();
+  data.takeaways++;
+  const entry = {date:today, type:'takeaway', name:'Takeaway night', flavour:'The hearth was dark tonight. No shame — but the world noticed the absence.', xp:0};
+  data.adventureLog.unshift(entry);
+  saveData(data); renderLog();
+  showToast('Logged. The hearth awaits your return.');
+}
+
+// ─── VIGIL ───
+function renderVigil() {
+  const today = todayStr();
+  const doneToday = data.vigilLog[today] || [];
+  const activeHabits = getActiveVigil();
+  const container = document.getElementById('vigilCards');
+  container.innerHTML = '';
+  activeHabits.forEach(habit => {
+    const done = doneToday.includes(habit.key);
+    const card = document.createElement('div');
+    card.className = 'vigil-card' + (done?' done':'');
+    card.id = 'vigil-'+habit.key;
+    card.innerHTML = `<div class="vigil-icon">${habit.icon}</div><div class="vigil-info"><div class="vigil-name">${habit.name}</div><div class="vigil-desc">${habit.desc}</div><div class="vigil-xp">${done?'Observed today · +'+habit.xp+' XP':'+'+habit.xp+' XP'}</div></div><div class="vigil-check">✦</div>`;
+    if (!done) card.onclick = () => logVigil(habit.key);
+    container.appendChild(card);
+  });
+}
+
+function logVigil(key) {
+  const today = todayStr();
+  if (!data.vigilLog[today]) data.vigilLog[today] = [];
+  if (data.vigilLog[today].includes(key)) return;
+  data.vigilLog[today].push(key);
+  const habit = ALL_VIGIL_HABITS.find(h => h.key===key);
+  gainXP(habit.xp);
+  data.worldHealth = Math.min(100, data.worldHealth+1);
+  const flavour = pickRandom(habit.flavour);
+  const entry = {date:today, type:'vigil', name:habit.name, flavour, xp:habit.xp};
+  data.adventureLog.unshift(entry);
+  saveData(data); updateHeader(false);
+  renderVigil(); renderLog(); renderProgress();
+  showToast(habit.name+' observed. +'+habit.xp+' XP');
+}
+
+// ─── LOG ───
+function renderLog() {
+  const log = document.getElementById('adventureLog');
+  if (!data.adventureLog.length) { log.innerHTML = '<div class="empty-log">The chronicle is blank.<br>Begin your first ritual.</div>'; return; }
+  log.innerHTML = data.adventureLog.slice(0,50).map(e => {
+    const bClass = {ritual:'ritual',hearth:'hearth',vigil:'vigil',takeaway:'takeaway'}[e.type]||'takeaway';
+    const bText = {ritual:'RITUAL',hearth:'HEARTH',vigil:'VIGIL',takeaway:'TAKEAWAY'}[e.type]||'LOG';
+    const subtitle = e.type==='ritual'?(e.focus?' — '+e.focus:''):e.type==='hearth'?' — Hearth':'';
+    const xpLine = e.xp>0?`<div class="log-xp">+${e.xp} XP</div>`:'';
+    return `<div class="log-entry"><div class="log-entry-header"><div class="log-date">${e.date}</div><span class="log-type-badge ${bClass}">${bText}</span></div><div class="log-session-name">${e.name}${subtitle}</div><div class="log-flavour">"${e.flavour}"</div>${xpLine}</div>`;
+  }).join('');
+}
+
+// ─── STREAK ───
+const STREAK_MESSAGES_ACTIVE = [
+  [1,  ["Today counts. One is not nothing — one is the beginning of everything.", "Day one. The hardest one. It's already done.", "The chronicle opens. The world is watching, quietly hopeful."]],
+  [2,  ["Two days. The pattern is forming. Keep going.", "Back again. That matters more than it might feel like right now.", "Two marks in the chronicle. The ley lines are paying attention."]],
+  [3,  ["Three days is a habit starting to believe in itself.", "Something is shifting. Three days of showing up does that.", "Three days. Not a streak yet — a signal. A good one."]],
+  [5,  ["Five days. This is real now. You are doing the thing.", "The world is measurably better for five days of small effort. Genuinely.", "Day five. The version of you who started this would be proud."]],
+  [7,  ["A full week. That is not luck. That is you, choosing this, repeatedly.", "Seven days. The ley lines are stable. You did that.", "One week in. The world holds because people like you keep showing up."]],
+  [10, ["Ten days. You are past the point where this is hard to start. Now it just needs tending.", "Double figures. The chronicle is filling up. Keep going.", "Ten days of small choices adding up to something real."]],
+  [14, ["Two weeks. The habit is yours now — not borrowed, not hoped for. Yours.", "Fourteen days. Most people never get here. You did.", "Two weeks in the chronicle. The world is noticeably steadier."]],
+  [21, ["Three weeks. This is who you are now, not just what you're trying to do.", "Twenty-one days. The science says this is where habits root. You're rooted.", "Three weeks of showing up. That is extraordinary. Genuinely."]],
+  [30, ["A month. A whole month. Whatever brought you here, you stayed. That is everything.", "Thirty days in the chronicle. The world is significantly better for it. So are you.", "One month. Not a streak — a transformation. The numbers don't capture what that took."]]
+];
+
+const STREAK_MESSAGES_MISSED = [
+  "The hearth has been quiet. That's okay. Rest isn't the same as giving up — sometimes it's the most honest thing you can do.",
+  "Missing a day doesn't mean you failed. It means you're human. The chronicle is still here. So are you.",
+  "The world doesn't keep score the way you might be keeping score right now. Come back when you're ready. No judgement here.",
+  "Some days are just hard. You don't owe anyone an explanation for that — not even yourself. The door is still open.",
+  "The version of you that comes back tomorrow isn't behind. She's exactly where she needs to be.",
+  "Rest is part of the practice, even when it doesn't feel chosen. The chronicle remembers everything you've already done.",
+  "You've shown up before. You'll show up again. Today you didn't, and that's allowed.",
+  "The ley lines are quiet, not broken. There's a difference. Come back whenever you're ready.",
+  "Whatever today was, it was yours. Tomorrow can be different if you want it to be. No pressure either way.",
+  "The world isn't disappointed. It's patient. So is this chronicle — it will be here when you return."
+];
+
+function calcStreak() {
+  const allDates = new Set([
+    ...data.sessions.map(s=>s.date),
+    ...data.adventureLog.filter(e=>e.type==='hearth').map(e=>e.date),
+    ...Object.keys(data.vigilLog).filter(d=>data.vigilLog[d].length>0)
+  ]);
+  const today = todayStr();
+  const toDate = str => new Date(str + 'T00:00:00');
+  const daysBetween = (a, b) => Math.round((toDate(b) - toDate(a)) / 86400000);
+
+  // Current streak — count back from today or yesterday
+  let current = 0;
+  let checkDate = new Date();
+  // If today has activity, start from today; otherwise start from yesterday
+  if (!allDates.has(today)) checkDate.setDate(checkDate.getDate()-1);
+  while (true) {
+    const str = checkDate.toISOString().split('T')[0];
+    if (allDates.has(str)) { current++; checkDate.setDate(checkDate.getDate()-1); }
+    else break;
+  }
+
+  // Best streak — scan all dates
+  const sorted = Array.from(allDates).sort();
+  let best = 0, run = 0, prevDate = null;
+  for (const d of sorted) {
+    if (!prevDate || daysBetween(prevDate, d) === 1) { run++; }
+    else if (daysBetween(prevDate, d) > 1) { run = 1; }
+    if (run > best) best = run;
+    prevDate = d;
+  }
+  if (current > best) best = current;
+
+  // Message
+  const todayActive = allDates.has(today);
+  const yesterdayActive = allDates.has(new Date(Date.now()-86400000).toISOString().split('T')[0]);
+  let message = '';
+  let isActive = false;
+
+  if (current === 0 && !todayActive && allDates.size === 0) {
+    message = 'Begin your chronicle. The world is waiting.';
+  } else if (current > 0) {
+    isActive = true;
+    // Find the right message tier
+    const tiers = STREAK_MESSAGES_ACTIVE.slice().reverse();
+    const pool = (tiers.find(([min]) => current >= min) || STREAK_MESSAGES_ACTIVE[0])[1];
+    message = pickRandom(pool);
+  } else {
+    message = pickRandom(STREAK_MESSAGES_MISSED);
+  }
+
+  return { current, best, message, isActive };
+}
+
+// ─── PROGRESS ───
+function renderProgress() {
+  // Streak
+  const { current, best, message, isActive } = calcStreak();
+  document.getElementById('currentStreak').textContent = current;
+  document.getElementById('bestStreak').textContent = best;
+  const msgEl = document.getElementById('streakMessage');
+  msgEl.textContent = message;
+  msgEl.className = 'streak-message' + (isActive ? ' active' : '');
+
+  const today = new Date();
+  const gymDates = new Set(data.sessions.map(s=>s.date));
+  const hearthDates = new Set(data.adventureLog.filter(e=>e.type==='hearth').map(e=>e.date));
+  const vigilDates = new Set(Object.keys(data.vigilLog).filter(d=>data.vigilLog[d].length>0));
+  const days = Array.from({length:7},(_,i)=>{
+    const d=new Date(today); d.setDate(d.getDate()-(6-i));
+    return {str:d.toISOString().split('T')[0],label:d.toLocaleDateString('en-GB',{weekday:'short'}).charAt(0),isToday:i===6};
+  });
+  document.getElementById('streakRow').innerHTML = days.map(d=>{
+    const g=gymDates.has(d.str),h=hearthDates.has(d.str),v=vigilDates.has(d.str);
+    const cls=(g&&h&&v)?'full':(g&&h)?'full':(g&&v)?'gym':(h&&v)?'hearth':g?'gym':h?'hearth':v?'vigil':'';
+    return `<div class="streak-day ${cls}"></div>`;
+  }).join('');
+  document.getElementById('streakDates').innerHTML = days.map(d=>`<span class="streak-date-label">${d.label}</span>`).join('');
+  const chart = document.getElementById('strengthChart');
+  const lifts = Object.values(data.bestLifts);
+  if (!lifts.length) chart.innerHTML='<div class="empty-log" style="font-size:12px;padding:1rem 0">Complete sessions to see strength grow.</div>';
+  else {
+    const max = Math.max(...lifts.map(l=>l.weight));
+    chart.innerHTML = lifts.map(l=>`<div class="chart-row"><div class="chart-ex-name">${l.name}</div><div class="chart-bar-track"><div class="chart-bar-fill" style="width:${Math.round((l.weight/max)*100)}%"></div></div><div class="chart-val">${l.weight}kg</div></div>`).join('');
+  }
+  document.getElementById('hearthRecord').innerHTML=`<div class="hearth-stats" style="margin-bottom:0"><div class="hearth-stat"><span class="hearth-stat-label">MEALS CRAFTED</span><span class="hearth-stat-val">${data.mealsCrafted}</span></div><div class="hearth-stat"><span class="hearth-stat-label">TAKEAWAYS</span><span class="hearth-stat-val" style="color:var(--text-secondary)">${data.takeaways}</span></div></div>`;
+  const activeHabits = getActiveVigil();
+  const vigilTotals = {};
+  activeHabits.forEach(h=>{vigilTotals[h.key]=0;});
+  Object.values(data.vigilLog).forEach(arr=>arr.forEach(k=>{if(vigilTotals[k]!==undefined)vigilTotals[k]++;}));
+  document.getElementById('vigilRecord').innerHTML = activeHabits.map(h=>`<div class="chart-row"><div class="chart-ex-name">${h.name}</div><div class="chart-bar-track"><div class="chart-bar-fill" style="width:${Math.min(100,vigilTotals[h.key]*5)}%;background:var(--arc-vigil)"></div></div><div class="chart-val" style="color:var(--arc-vigil)">${vigilTotals[h.key]}×</div></div>`).join('');
+}
+
+// ─── TABS ───
+function switchTab(tab) {
+  const tabs=['session','hearth','vigil','log','progress','data'];
+  document.querySelectorAll('.nav-tab').forEach((t,i)=>t.classList.toggle('active',tabs[i]===tab));
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.getElementById('view-'+tab).classList.add('active');
+  if(tab==='vigil') renderVigil();
+  if(tab==='log') renderLog();
+  if(tab==='progress') renderProgress();
+}
+
+function showToast(msg) {
+  const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2500);
+}
+
+// ─── IMPORT / EXPORT ───
+function importData(event) {
+  const file=event.target.files[0]; if(!file) return;
+  const reader=new FileReader();
+  reader.onload=function(e) {
+    try {
+      const imported=JSON.parse(e.target.result);
+      if(imported.level===undefined||imported.sessions===undefined){showToast('Invalid chronicle file.');return;}
+      // Migration: add new fields if missing
+      if(!imported.theme) imported.theme = 'ashen';
+      if(!imported.charName) imported.charName = 'Traveller';
+      if(!imported.primaryClass) imported.primaryClass = 'arcanist';
+      if(!imported.hearthClass) imported.hearthClass = 'hearthbinder';
+      if(!imported.exerciseGoal) imported.exerciseGoal = 'strength';
+      if(!imported.vigilHabits) imported.vigilHabits = ['study','rest','bond','upkeep','revelation'];
+      if(!imported.adventureLog) imported.adventureLog=[];
+      if(!imported.vigilLog) imported.vigilLog={};
+      if(!imported.sessionSwaps) imported.sessionSwaps={};
+      if(!imported.activeExercises) imported.activeExercises={};
+      ['arcXp','arcLevel','hearthXp','hearthLevel','sustenance','mealsCrafted','takeaways'].forEach(k=>{if(!imported[k])imported[k]=k.includes('Level')?1:0;});
+      data=imported;
+      saveData(data);
+      launchApp();
+      showToast('Chronicle restored. Welcome back, '+data.charName+'.');
+    } catch { showToast('Could not read file.'); }
+    event.target.value='';
+  };
+  reader.readAsText(file);
+}
+
+function exportData() {
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a'); a.href=url;
+  a.download='chronicle_'+data.charName.replace(/\s/g,'_')+'_'+todayStr()+'.json';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url); showToast('Chronicle exported.');
+}
+
+function resetCharacter() {
+  if (!confirm('Start a new character? Your current chronicle will be lost unless exported first.')) return;
+  localStorage.removeItem('rpgfit_v4');
+  data = null;
+  selectedPrimary = null; selectedHearth = null; selectedVigil = new Set(); selectedGoal = null;
+  document.getElementById('mainApp').classList.add('hidden');
+  document.getElementById('landingScreen').classList.add('hidden');
+  document.getElementById('creationScreen').classList.remove('hidden');
+  document.getElementById('charNameInput').value = '';
+  document.querySelectorAll('.class-option').forEach(el=>el.classList.remove('selected'));
+  document.querySelectorAll('.vigil-option').forEach(el=>el.classList.remove('selected'));
+  checkBeginBtn();
+}
+
+function applyTheme(theme) {
+  document.body.className = 'theme-' + (theme || 'ashen');
+}
+
+function selectTheme(theme) {
+  applyTheme(theme);
+  ['swatch-','codex-swatch-'].forEach(prefix => {
+    ['ashen','ember','woodland','dusk'].forEach(t => {
+      const el = document.getElementById(prefix + t);
+      if (el) el.classList.toggle('selected', t === theme);
+    });
+  });
+  if (data) { data.theme = theme; saveData(data); }
+}
+
+function enterChronicle() {
+  document.getElementById('landingScreen').classList.add('hidden');
+  document.getElementById('creationScreen').classList.remove('hidden');
+}
+
+// ─── INIT ───
+buildCreationScreen();
+applyTheme('ashen');
+const saved = loadData();
+if (saved && saved.charName) {
+  data = saved;
+  applyTheme(data.theme || 'ashen');
+  launchApp();
+} else {
+  document.getElementById('creationScreen').classList.add('hidden');
+}
+</script>
+</body>
+</html>
