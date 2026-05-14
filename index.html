@@ -82,9 +82,9 @@
     --text: #1a1a18; --text-secondary: #6b6b67; --text-tertiary: #a0a09c;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-  html { height: 100%; }
-  body { height: 100%; overflow-x: hidden; background: var(--bg); color: var(--text); font-family: 'Crimson Pro', Georgia, serif; }
-  body.app-active { overflow: hidden; }
+  html { min-height: 100%; }
+  body { min-height: 100%; overflow-x: hidden; overflow-y: auto; background: var(--bg); color: var(--text); font-family: 'Crimson Pro', Georgia, serif; }
+  body.app-active { overflow: hidden; height: 100%; }
   .app { display: flex; flex-direction: column; height: 100vh; height: 100dvh; max-width: 480px; margin: 0 auto; background: var(--bg); overflow-x: hidden; }
   .app.hidden { display: none !important; }
 
@@ -260,7 +260,7 @@
   .danger-btn:active { opacity: 0.6; }
 
   /* LANDING SCREEN */
-  .landing-screen { display: block; max-width: 480px; margin: 0 auto; padding: 1.5rem 1.25rem 2rem; background: var(--bg); min-height: 100vh; min-height: 100dvh; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+  .landing-screen { display: block; max-width: 480px; margin: 0 auto; padding: 1.5rem 1.25rem 5rem; background: var(--bg); }
   .landing-screen.hidden { display: none !important; }
   .landing-sigil { font-size: 36px; text-align: center; margin-bottom: 0.5rem; }
   .landing-eyebrow { font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 0.15em; color: var(--text-tertiary); text-align: center; margin-bottom: 0.3rem; }
@@ -400,7 +400,7 @@
 </div>
 
 <!-- CHARACTER CREATION -->
-<div class="creation-screen" id="creationScreen">
+<div class="creation-screen hidden" id="creationScreen">
   <div class="creation-title">Begin Your Chronicle</div>
   <div class="creation-subtitle">Shape your character. The world is on the brink — small acts of discipline hold it together.</div>
 
