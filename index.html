@@ -82,7 +82,8 @@
     --text: #1a1a18; --text-secondary: #6b6b67; --text-tertiary: #a0a09c;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-  html, body { height: 100%; overflow: hidden; overflow-x: hidden; background: var(--bg); color: var(--text); font-family: 'Crimson Pro', Georgia, serif; }
+  html, body { height: 100%; overflow-x: hidden; background: var(--bg); color: var(--text); font-family: 'Crimson Pro', Georgia, serif; }
+  body.app-active { overflow: hidden; }
   .app { display: flex; flex-direction: column; height: 100vh; height: 100dvh; max-width: 480px; margin: 0 auto; background: var(--bg); overflow-x: hidden; }
 
   /* CHARACTER CREATION */
@@ -257,7 +258,7 @@
   .danger-btn:active { opacity: 0.6; }
 
   /* LANDING SCREEN */
-  .landing-screen { display: flex; flex-direction: column; justify-content: space-between; height: 100vh; height: 100dvh; max-width: 480px; margin: 0 auto; padding: 3rem 2rem 3rem; background: var(--bg); overflow-y: auto; }
+  .landing-screen { display: block; max-width: 480px; margin: 0 auto; padding: 2.5rem 1.5rem 3rem; background: var(--bg); min-height: 100vh; min-height: 100dvh; overflow-y: auto; }
   .landing-screen.hidden { display: none; }
   .landing-sigil { font-size: 48px; text-align: center; margin-bottom: 1.5rem; }
   .landing-eyebrow { font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 0.15em; color: var(--text-tertiary); text-align: center; margin-bottom: 0.5rem; }
@@ -961,6 +962,7 @@ function gainXP(amount) {
 function launchApp() {
   document.getElementById('creationScreen').classList.add('hidden');
   document.getElementById('mainApp').classList.remove('hidden');
+  document.body.classList.add('app-active');
   const pc = getPrimaryClass();
   const hc = getHearthClass();
   document.getElementById('primaryClassLabel').textContent = pc.name.toUpperCase();
@@ -1414,6 +1416,7 @@ function resetCharacter() {
   data = null;
   selectedPrimary = null; selectedHearth = null; selectedVigil = new Set(); selectedGoal = null;
   document.getElementById('mainApp').classList.add('hidden');
+  document.body.classList.remove('app-active');
   document.getElementById('landingScreen').classList.add('hidden');
   document.getElementById('creationScreen').classList.remove('hidden');
   document.getElementById('charNameInput').value = '';
