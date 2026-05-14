@@ -961,6 +961,7 @@ function gainXP(amount) {
 
 // ─── LAUNCH ───
 function launchApp() {
+  document.getElementById('landingScreen').classList.add('hidden');
   document.getElementById('creationScreen').classList.add('hidden');
   document.getElementById('mainApp').classList.remove('hidden');
   document.body.classList.add('app-active');
@@ -1455,14 +1456,15 @@ function enterChronicle() {
 
 // ─── INIT ───
 buildCreationScreen();
-applyTheme('ashen');
 const saved = loadData();
 if (saved && saved.charName) {
   data = saved;
   applyTheme(data.theme || 'ashen');
   launchApp();
 } else {
+  applyTheme('ashen');
   document.getElementById('creationScreen').classList.add('hidden');
+  document.getElementById('mainApp').classList.add('hidden');
 }
 </script>
 </body>
